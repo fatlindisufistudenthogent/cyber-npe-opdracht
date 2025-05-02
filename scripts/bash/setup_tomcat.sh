@@ -8,8 +8,9 @@ TOMCAT_PORT_AJP=8009
 
 # Controleer of Docker is geïnstalleerd
 if ! command -v docker &> /dev/null; then
-    echo "Docker is niet geïnstalleerd. Installeer Docker eerst met: sudo apt install docker.io"
-    exit 1
+    echo "Docker is niet geïnstalleerd."
+    echo "Docker wordt voor u geinstalleerd..."
+    sudo apt install docker.io -y
 fi
 
 # Bouw de Docker-image
