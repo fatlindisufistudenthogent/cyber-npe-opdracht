@@ -1,5 +1,6 @@
 @REM Commando's zelf worden niet weergegeven, enkel output
 @echo off
+setlocal enabledelayedexpansion
 set /a getal=1
 
 @REM Systeemmelding
@@ -38,7 +39,7 @@ cd "C:\Program Files\Oracle\VirtualBox" || (
     cls
     call :wait_short
     color OC
-    echo Er is een fout opgetreden. Het pad "C:\Program Files\Oracle\VirtualBox" bestaat niet  . Mogelijks moet u virtual box eerst installeren.
+    echo Er is een fout opgetreden. Het pad "C:\Program Files\Oracle\VirtualBox" bestaat niet. Mogelijks moet u virtual box eerst installeren.
     call :program_exit
 )
 call :wait_short
@@ -57,9 +58,9 @@ call :wait_short
 echo Om het script correct te laten verlopen, zorgt u ervoor dat de volgende virtuele harde schijven in de corresponderende locaties staan:
 echo.
 call :wait_long
-echo 1. Versie Ubuntu 24.10 (64bit): %USERPROFILE%\Downloads\64bit\64bit\Ubuntu 24.10 (64bit).vdi
+echo 1. Versie Ubuntu 24.10 (64bit): "%USERPROFILE%\Downloads\64bit\64bit\Ubuntu 24.10 (64bit).vdi"
 call :wait_short
-echo 2. Versie Kali Linux 2024.3 (64bit): %USERPROFILE%\Downloads\64bit(1)\64bit\Kali Linux 2024.3 (64bit).vdi
+echo 2. Versie Kali Linux 2024.3 (64bit): "%USERPROFILE%\Downloads\64bit (1)\64bit\Kali Linux 2024.3 (64bit).vdi"
 echo.
 echo U kunt de vdis afhalen via de officiele website: 
 call :wait_short
@@ -84,8 +85,8 @@ mkdir "%VM_FOLDER%\NPE_OPDRACHT\%VM_NAAM_1%" >> "%USERPROFILE%\Desktop\errors_lo
     cls
     color 0C
     call :wait_short
-    echo Er is een fout opgetreden bij het aanmaken van de VM folder. 
-    echo - Er is een fout opgetreden bij het het aanmaken van de VM folder. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo Er is een fout opgetreden bij het aanmaken van de VM folder.
+    echo - Er is een fout opgetreden bij het het aanmaken van de VM folder. >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen
     call :wait_short
     notepad "%USERPROFILE%\Desktop\errors_log.md"
@@ -101,10 +102,10 @@ mkdir "%VM_FOLDER%\NPE_OPDRACHT\%VM_NAAM_2%" >> "%USERPROFILE%\Desktop\errors_lo
     color 0C
     call :wait_short
     echo Er is een fout opgetreden bij het aanmaken van de VM folder. 
-    echo - Er is een fout opgetreden bij het het aanmaken van de VM folder. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo - Er is een fout opgetreden bij het het aanmaken van de VM folder. >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen
     call :wait_short
-    notepad "%USERPROFILE%\Desktop\errors_log.md"
+    notepad "!USERPROFILE!\Desktop\errors_log.md"
     call :wait_short
     cls
     call :program_exit
@@ -117,10 +118,10 @@ copy "%USERPROFILE%\Downloads\64bit\64bit\Ubuntu 24.10 (64bit).vdi" "%VM_FOLDER%
     color 0C
     call :wait_short
     echo Er is een fout opgetreden bij het verplaatsen van de ubuntu vdi bestand.
-    echo - Er is een fout opgetreden bij het verplaatsen van de ubuntu vdi bestand >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo - Er is een fout opgetreden bij het verplaatsen van de ubuntu vdi bestand >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen
     call :wait_short
-    notepad "%USERPROFILE%\Desktop\errors_log.md"
+    notepad "!USERPROFILE!\Desktop\errors_log.md"
     call :wait_short
     cls
     call :program_exit
@@ -128,15 +129,15 @@ copy "%USERPROFILE%\Downloads\64bit\64bit\Ubuntu 24.10 (64bit).vdi" "%VM_FOLDER%
 @REM copy moet move zijn
 echo PROGRESS [6/18] VDI Kali VM verplaatsen van downloads folder naar bestemmingsfolder  
 call :wait_mid
-copy "%USERPROFILE%\Downloads\64bit(1)\64bit\Kali Linux 2024.3 (64bit).vdi" "%VM_FOLDER%\NPE_OPDRACHT\%VM_NAAM_2%" >> "%USERPROFILE%\Desktop\errors_log.md" 2>&1 || (
+copy "%USERPROFILE%\Downloads\64bit (1)\64bit\Kali Linux 2024.3 (64bit).vdi" "%VM_FOLDER%\NPE_OPDRACHT\%VM_NAAM_2%" >> "%USERPROFILE%\Desktop\errors_log.md" 2>&1 || (
     cls
     color 0C
     call :wait_short    
     echo Er is een fout opgetreden bij het verplaatsen van de kali vdi bestand
-    echo - Er is een fout opgetreden bij het verplaatsen van de kali vdi bestand >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo - Er is een fout opgetreden bij het verplaatsen van de kali vdi bestand >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md"
+    notepad "!USERPROFILE!\Desktop\errors_log.md"
     color 0F
     cls
     call :program_exit
@@ -154,10 +155,10 @@ VBoxManage.exe createvm --name %VM_NAAM_1% ^
     color 0C
     call :wait_short    
     echo Er is een fout opgetreden bij het creeeren van de %VM_NAAM_1%
-    echo - Er is een fout opgetreden bij het creeeren van de %VM_NAAM_1% >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo - Er is een fout opgetreden bij het creeeren van de %VM_NAAM_1% >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md"
+    notepad "!USERPROFILE!\Desktop\errors_log.md"
     cls
     color 0F
     call :program_exit
@@ -174,10 +175,10 @@ VBoxManage.exe createvm --name %VM_NAAM_2% ^
     color 0C
     call :wait_short
     echo Er is een fout opgetreden bij het creeeren van de %VM_NAAM_2%
-    echo - Er is een fout opgetreden bij het creeeren van de %VM_NAAM_2% >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo - Er is een fout opgetreden bij het creeeren van de %VM_NAAM_2% >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md"    
+    notepad "!USERPROFILE!\Desktop\errors_log.md"    
     cls
     color 0F
     call :program_exit
@@ -194,10 +195,10 @@ VBoxManage.exe modifyvm %VM_NAAM_1% --memory 2048 ^
     color 0C
     call :wait_short    
     echo Er is een fout opgetreden bij het configureren van de %VM_NAAM_1%, meer bepaald het alloceren van de memory, cores, vram en nic.
-    echo - Er is een fout opgetreden bij het configureren van de %VM_NAAM_1%, meer bepaald het alloceren van de memory, cores, vram en nic. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo - Er is een fout opgetreden bij het configureren van de %VM_NAAM_1%, meer bepaald het alloceren van de memory, cores, vram en nic. >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md" 
+    notepad "!USERPROFILE!\Desktop\errors_log.md" 
     cls    
     color 0F
     call :program_exit
@@ -213,10 +214,10 @@ VBoxManage.exe modifyvm %VM_NAAM_2% --memory 2048 ^
     color 0C
     call :wait_short    
     echo Er is een fout opgetreden bij het configureren van de %VM_NAAM_2%, meer bepaald het alloceren van de memory, cores, vram en nic.
-    echo - Er is een fout opgetreden bij het configureren van de %VM_NAAM_2%, meer bepaald het alloceren van de memory, cores, vram en nic. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo - Er is een fout opgetreden bij het configureren van de %VM_NAAM_2%, meer bepaald het alloceren van de memory, cores, vram en nic. >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md"    
+    notepad "!USERPROFILE!\Desktop\errors_log.md"    
     cls
     color 0F
     call :program_exit
@@ -231,10 +232,10 @@ VBoxManage.exe storagectl %VM_NAAM_1% --name "SATA Controller" ^
     color 0C
     call :wait_short    
     echo Er is een fout opgetreden bij het configureren van de %VM_NAAM_1%, meer bepaald de sata controller.
-    echo - Er is een fout opgetreden bij het configureren van de %VM_NAAM_1%, meer bepaald de sata controller. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo - Er is een fout opgetreden bij het configureren van de %VM_NAAM_1%, meer bepaald de sata controller. >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md"   
+    notepad "!USERPROFILE!\Desktop\errors_log.md"   
     cls
     call :program_exit
 )
@@ -248,10 +249,10 @@ VBoxManage.exe storagectl %VM_NAAM_2% --name "SATA Controller" ^
     color 0C
     call :wait_short
     echo Er is een fout opgetreden bij het configureren van de %VM_NAAM_2%, meer bepaald de sata controller.
-    echo - Er is een fout opgetreden bij het configureren van de %VM_NAAM_2%, meer bepaald de sata controller. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo - Er is een fout opgetreden bij het configureren van de %VM_NAAM_2%, meer bepaald de sata controller. >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md"    
+    notepad "!USERPROFILE!\Desktop\errors_log.md"    
     cls
     call :program_exit
 )
@@ -266,40 +267,40 @@ VBoxManage.exe storageattach %VM_NAAM_1% --storagectl "SATA Controller" ^
     cls
     color 0C
     call :wait_short
-    echo Er is een fout opgetreden bij het toevoegen van de %VM_NAAM_1% vdi aan de sata controller. Mogelijks heeft u twee dezelfde vdi's   staan. Er wordt geprobeerd dit voor je op te lossen.  
+    echo Er is een fout opgetreden bij het toevoegen van de %VM_NAAM_1% vdi aan de sata controller. Mogelijks heeft u twee dezelfde vdi's staan. Er wordt geprobeerd dit voor je op te lossen.  
     @REM Oplossen problemen
     @REM ------------------
     echo [EXTRA] Ubuntu VM vdi UUID wordt aangepast  
     call :wait_mid
-    VBoxManage closemedium disk "%VM_VDI_PAD_1%" >> "%USERPROFILE%\Desktop\errors_log.md" 2>&1 || (
+    VBoxManage closemedium disk "!VM_VDI_PAD_1!" >> "!USERPROFILE!\Desktop\errors_log.md" 2>&1 || (
         cls
         color 0C
         call :wait_short
-        echo Er is een fout opgetreden bij het loskoppelen van de vdi aan %VM_NAAM_1%.
-        echo - Er is een fout opgetreden bij het loskoppelen van de vdi aan %VM_NAAM_1% >> "%USERPROFILE%\Desktop\errors_log.md"
+        echo Er is een fout opgetreden bij het loskoppelen van de vdi aan !VM_NAAM_1!.
+        echo - Er is een fout opgetreden bij het loskoppelen van de vdi aan !VM_NAAM_1! >> "!USERPROFILE!\Desktop\errors_log.md"
         echo Er is een log bestand die u mogelijks verder kan helpen   
         call :wait_short    
-        notepad "%USERPROFILE%\Desktop\errors_log.md" 
+        notepad "!USERPROFILE!\Desktop\errors_log.md" 
         cls
         call :program_exit
     )
-    VBoxManage.exe internalcommands sethduuid "%VM_VDI_PAD_1%" >> "%USERPROFILE%\Desktop\errors_log.md" 2>&1 || (
+    VBoxManage.exe internalcommands sethduuid "!VM_VDI_PAD_1!" >> "!USERPROFILE!\Desktop\errors_log.md" 2>&1 || (
         cls
         color 0C
         call :wait_short
-        echo Er is een fout opgetreden bij het veranderen van de UUID van de %VM_NAAM_1%.
-        echo - Er is een fout opgetreden bij het veranderen van de UUID van de %VM_NAAM_1% >> "%USERPROFILE%\Desktop\errors_log.md"
+        echo Er is een fout opgetreden bij het veranderen van de UUID van de !VM_NAAM_1!.
+        echo - Er is een fout opgetreden bij het veranderen van de UUID van de !VM_NAAM_1! >> "!USERPROFILE!\Desktop\errors_log.md"
         echo Er is een log bestand die u mogelijks verder kan helpen   
         call :wait_short    
-        notepad "%USERPROFILE%\Desktop\errors_log.md" 
+        notepad "!USERPROFILE!\Desktop\errors_log.md" 
         cls
         call :program_exit
     )
     @REM ------------------
-    echo - Er is een fout opgetreden bij het toevoegen van de %VM_NAAM_1% vdi aan de sata controller. Mogelijks heeft u twee dezelfde vdi's   staan. Er wordt geprobeerd dit voor je op te lossen. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo - Er is een fout opgetreden bij het toevoegen van de !VM_NAAM_1! vdi aan de sata controller. Mogelijks heeft u twee dezelfde vdi's staan. Er wordt geprobeerd dit voor je op te lossen. >> "%USERPROFILE%\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md"       
+    notepad "!USERPROFILE!\Desktop\errors_log.md"       
     cls
     call :program_exit
 )
@@ -315,40 +316,40 @@ VBoxManage.exe storageattach %VM_NAAM_2% --storagectl "SATA Controller" ^
     cls
     color 0C
     call :wait_short
-    echo Er is een fout opgetreden bij het toevoegen van de %VM_NAAM_2% vdi aan de sata controller. Mogelijks heeft u twee dezelfde vdi's   staan. Er wordt geprobeerd dit voor je op te lossen.  
+    echo Er is een fout opgetreden bij het toevoegen van de !VM_NAAM_2! vdi aan de sata controller. Mogelijks heeft u twee dezelfde vdi's staan. Er wordt geprobeerd dit voor je op te lossen.  
     @REM Oplossen problemen
     @REM ------------------
     echo [EXTRA] Kali VM vdi UUID wordt aangepast  
     call :wait_mid
-    VBoxManage closemedium disk "%VM_VDI_PAD_2%" >> "%USERPROFILE%\Desktop\errors_log.md" 2>&1 || (
+    VBoxManage closemedium disk "!VM_VDI_PAD_2!" >> "!USERPROFILE!\Desktop\errors_log.md" 2>&1 || (
         cls
         color 0C
         call :wait_short
-        echo Er is een fout opgetreden bij het loskoppelen van de vdi aan %VM_NAAM_2%.
-        echo - Er is een fout opgetreden bij het loskoppelen van de vdi aan %VM_NAAM_2% >> "%USERPROFILE%\Desktop\errors_log.md"
+        echo Er is een fout opgetreden bij het loskoppelen van de vdi aan !VM_NAAM_2!.
+        echo - Er is een fout opgetreden bij het loskoppelen van de vdi aan !VM_NAAM_2! >> "!USERPROFILE!\Desktop\errors_log.md"
         echo Er is een log bestand die u mogelijks verder kan helpen   
         call :wait_short    
-        notepad "%USERPROFILE%\Desktop\errors_log.md" 
+        notepad "!USERPROFILE!\Desktop\errors_log.md" 
         cls
         call :program_exit
     )
-    VBoxManage.exe internalcommands sethduuid "%VM_VDI_PAD_2%" >> "%USERPROFILE%\Desktop\errors_log.md" 2>&1 || (
+    VBoxManage.exe internalcommands sethduuid "!VM_VDI_PAD_2!" >> "!USERPROFILE!\Desktop\errors_log.md" 2>&1 || (
         cls
         color 0C
         call :wait_short
-        echo Er is een fout opgetreden bij het veranderen van de UUID van de %VM_NAAM_2%.
-        echo - Er is een fout opgetreden bij het veranderen van de UUID van de %VM_NAAM_2% >> "%USERPROFILE%\Desktop\errors_log.md"
+        echo Er is een fout opgetreden bij het veranderen van de UUID van de !VM_NAAM_2!.
+        echo - Er is een fout opgetreden bij het veranderen van de UUID van de !VM_NAAM_2! >> "!USERPROFILE!\Desktop\errors_log.md"
         echo Er is een log bestand die u mogelijks verder kan helpen   
         call :wait_short    
-        notepad "%USERPROFILE%\Desktop\errors_log.md" 
+        notepad "!USERPROFILE!\Desktop\errors_log.md" 
         cls
         call :program_exit
     )
     @REM ------------------
-    echo - Er is een fout opgetreden bij het toevoegen van de %VM_NAAM_2% vdi aan de sata controller. Mogelijks heeft u twee dezelfde vdi's   staan. Er wordt geprobeerd dit voor je op te lossen. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo - Er is een fout opgetreden bij het toevoegen van de !VM_NAAM_2! vdi aan de sata controller. Mogelijks heeft u twee dezelfde vdi's staan. Er wordt geprobeerd dit voor je op te lossen. >> "%USERPROFILE%\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen   
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md" 
+    notepad "!USERPROFILE!\Desktop\errors_log.md" 
     cls
     call :program_exit
 )
@@ -359,11 +360,11 @@ VBoxManage.exe modifyvm %VM_NAAM_1% --boot1 disk >> "%USERPROFILE%\Desktop\error
     cls
     color 0C
     call :wait_short
-    echo Er is een fout opgetreden bij het bepalen van boot orde van %VM_NAAM_1%.
-    echo - Er is een fout opgetreden bij het bepalen van boot orde van %VM_NAAM_1%. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo Er is een fout opgetreden bij het bepalen van boot orde van !VM_NAAM_1!.
+    echo - Er is een fout opgetreden bij het bepalen van boot orde van !VM_NAAM_1!. >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen   
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md"    
+    notepad "!USERPROFILE!\Desktop\errors_log.md"    
     cls
     call :program_exit
 )
@@ -374,11 +375,11 @@ VBoxManage.exe modifyvm %VM_NAAM_2% --boot1 disk >> "%USERPROFILE%\Desktop\error
     cls
     color 0C
     call :wait_short
-    echo Er is een fout opgetreden bij het bepalen van boot orde van %VM_NAAM_2%.
-    echo - Er is een fout opgetreden bij het bepalen van boot orde van %VM_NAAM_1%. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo Er is een fout opgetreden bij het bepalen van boot orde van !VM_NAAM_2!.
+    echo - Er is een fout opgetreden bij het bepalen van boot orde van !VM_NAAM_2!. >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen   
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md" 
+    notepad "!USERPROFILE!\Desktop\errors_log.md" 
     cls
     call :program_exit
 )
@@ -399,11 +400,11 @@ VBoxManage snapshot "%VM_NAAM_1%" take "Init fase" --description "Gebruikersnaam
     cls
     color 0C
     call :wait_short
-    echo Er is een fout opgetreden bij het maken van een back-up voor %VM_NAAM_1%.
-    echo - Er is een fout opgetreden bij het maken van een back-up voor %VM_NAAM_1%. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo Er is een fout opgetreden bij het maken van een back-up voor !VM_NAAM_1!.
+    echo - Er is een fout opgetreden bij het maken van een back-up voor !VM_NAAM_1!. >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen   
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md" 
+    notepad "!USERPROFILE!\Desktop\errors_log.md" 
     cls
     call :program_exit
 )
@@ -414,11 +415,11 @@ VBoxManage snapshot "%VM_NAAM_2%" take "Init fase" --description "Gebruikersnaam
     cls
     color 0C
     call :wait_short
-    echo Er is een fout opgetreden bij het maken van een back-up voor %VM_NAAM_2%.
-    echo - Er is een fout opgetreden bij het maken van een back-up voor %VM_NAAM_2%. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo Er is een fout opgetreden bij het maken van een back-up voor !VM_NAAM_2!.
+    echo - Er is een fout opgetreden bij het maken van een back-up voor !VM_NAAM_2!. >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen   
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md" 
+    notepad "!USERPROFILE!\Desktop\errors_log.md" 
     cls
     call :program_exit
 )
@@ -437,11 +438,11 @@ VBoxManage.exe startvm %VM_NAAM_1% >> "%USERPROFILE%\Desktop\errors_log.md" 2>&1
     cls
     color 0C
     call :wait_short
-    echo Er is een fout opgetreden bij het opstarten van %VM_NAAM_1%. Probeer handmatig op te starten.
-    echo - Er is een fout opgetreden bij het opstarten van %VM_NAAM_1%. Probeer handmatig op te starten. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo Er is een fout opgetreden bij het opstarten van !VM_NAAM_1!. Probeer handmatig op te starten.
+    echo - Er is een fout opgetreden bij het opstarten van !VM_NAAM_1!. Probeer handmatig op te starten. >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen   
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md"
+    notepad "!USERPROFILE!\Desktop\errors_log.md"
     cls
     call :program_exit
 )
@@ -449,11 +450,11 @@ VBoxManage.exe startvm %VM_NAAM_2% >> "%USERPROFILE%\Desktop\errors_log.md" 2>&1
     cls
     color 0C
     call :wait_short
-    echo Er is een fout opgetreden bij het opstarten van %VM_NAAM_2%.
-    echo - Er is een fout opgetreden bij het opstarten van %VM_NAAM_2%. >> "%USERPROFILE%\Desktop\errors_log.md"
+    echo Er is een fout opgetreden bij het opstarten van !VM_NAAM_2!.
+    echo - Er is een fout opgetreden bij het opstarten van !VM_NAAM_2!. >> "!USERPROFILE!\Desktop\errors_log.md"
     echo Er is een log bestand die u mogelijks verder kan helpen   
     call :wait_short    
-    notepad "%USERPROFILE%\Desktop\errors_log.md"
+    notepad "!USERPROFILE!\Desktop\errors_log.md"
     cls
     call :program_exit
 )
@@ -510,11 +511,13 @@ call :simulatie_functie
 :default
 echo.
 echo Alle wijzigingen worden ongedaan gemaakt...
+rmdir /s /q "%VM_FOLDER%\NPE_OPDRACHT"
+del "%USERPROFILE%\Desktop\errors_log.md"
 vboxmanage unregistervm "%VM_NAAM_1%" --delete > nul 2>&1 || (
     cls
     color 0C
     call :wait_short
-    echo Er is een fout opgetreden bij het ongedaan maken van %VM_NAAM_1%. U moet deze handmatig verwijderen in Oracle Virtual Box en in de map %VM_FOLDER_1%
+    echo Er is een fout opgetreden bij het ongedaan maken van !VM_NAAM_1!. U moet deze handmatig verwijderen in Oracle Virtual Box en in de map !VM_FOLDER_1!
     call :wait_short
     cls
     color 0F
@@ -522,7 +525,6 @@ vboxmanage unregistervm "%VM_NAAM_1%" --delete > nul 2>&1 || (
     call :simulatie_functie
     set /a getal=1
     call :wait_short
-    echo Probeer handmatig op te starten
     call :wait_mid
      exit 1
 )
@@ -530,7 +532,7 @@ vboxmanage unregistervm "%VM_NAAM_2%" --delete > nul 2>&1 || (
     cls
     color 0C
     call :wait_short
-    echo Er is een fout opgetreden bij het ongedaan maken van %VM_NAAM_2%. U moet deze handmatig verwijderen in Oracle Virtual Box en in de map %VM_FOLDER_2%
+    echo Er is een fout opgetreden bij het ongedaan maken van !VM_NAAM_2!. U moet deze handmatig verwijderen in Oracle Virtual Box en in de map !VM_FOLDER_2!
     call :wait_short
     cls
     color 0F
@@ -538,7 +540,6 @@ vboxmanage unregistervm "%VM_NAAM_2%" --delete > nul 2>&1 || (
     call :simulatie_functie
     set /a getal=1
     call :wait_short
-    echo Probeer handmatig op te starten
     call :wait_mid
      exit 1
 )
