@@ -34,17 +34,27 @@ if (-Not (Test-Path $VM_FOLDER)) {
     exit 0
 }
 
-#Copy-Item "$env:USERPROFILE\Downloads\64bit\64bit\Ubuntu 24.10 (64bit).vdi" -Destination $VM_FOLDER
-#Copy-Item "$env:USERPROFILE\Downloads\64bit (1)\64bit\Kali Linux 2024.3 (64bit).vdi" -Destination $VM_FOLDER
-
-Copy-Item "$env:USERPROFILE\Desktop\Jaar 2\Semester 2\Cybersecurity\Ubuntu 24.10 (64bit).vdi" -Destination $VM_FOLDER # Dit is Jamie zijn locatie
-Copy-Item "$env:USERPROFILE\Desktop\Jaar 2\Semester 2\Cybersecurity\Kali Linux 2024.3 (64bit).vdi" -Destination $VM_FOLDER # Dit is Jamie zijn locatie
+copy-Item "$env:USERPROFILE\Downloads\64bit\64bit\Ubuntu 24.10 (64bit).vdi" -Destination $VM_FOLDER
+Copy-Item "$env:USERPROFILE\Downloads\64bit (1)\64bit\Kali Linux 2024.3 (64bit).vdi" -Destination $VM_FOLDER
 
 VBoxManage.exe createvm --name $VM_NAAM_1 --basefolder $VM_FOLDER --groups "/NPE_g" --ostype Ubuntu_64 --register
 VBoxManage.exe createvm --name $VM_NAAM_2 --basefolder $VM_FOLDER --groups "/NPE_g" --ostype Debian_64 --register
 
-VBoxManage.exe modifyvm $VM_NAAM_1 --memory 2048 --cpus 2 --vram 64 --nic1 intnet
-VBoxManage.exe modifyvm $VM_NAAM_2 --memory 2048 --cpus 2 --vram 64 --nic1 intnet
+
+$hostOnlyAdapter = $(VBoxManage.exe list hostonlyifs | Select-String "Name:.*VirtualBox Host-Only Ethernet Adapter")
+if (-not $hostOnlyAdapter) {
+    Write-Host "Geen Host-Only Adapter gevonden. Een nieuwe wordt aangemaakt..."
+    VBoxManage.exe hostonlyif create
+}
+
+
+$hostOnlyAdapterName = $(VBoxManage.exe list hostonlyifs | Select-String "Name:.*VirtualBox Host-Only Ethernet Adapter$" | Select-Object -First 1 | ForEach-Object { $_.ToString().Split(":")[1].Trim() })
+
+
+
+
+VBoxManage.exe modifyvm $VM_NAAM_1 --memory 2048 --cpus 2 --vram 64 --nic1 hostonly --hostonlyadapter1 "$hostOnlyAdapterName"
+VBoxManage.exe modifyvm $VM_NAAM_2 --memory 2048 --cpus 2 --vram 64 --nic1 hostonly --hostonlyadapter1 "$hostOnlyAdapterName"
 
 VBoxManage.exe storagectl $VM_NAAM_1 --name "SATA Controller" --add sata --controller IntelAhci
 VBoxManage.exe storagectl $VM_NAAM_2 --name "SATA Controller" --add sata --controller IntelAhci
@@ -60,3 +70,5 @@ VBoxManage.exe snapshot $VM_NAAM_2 take "Init fase" --description "Gebruikersnaa
 
 VBoxManage.exe startvm $VM_NAAM_1
 VBoxManage.exe startvm $VM_NAAM_2
+
+
