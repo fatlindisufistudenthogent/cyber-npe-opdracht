@@ -34,8 +34,11 @@ if (-Not (Test-Path $VM_FOLDER)) {
     exit 0
 }
 
-Copy-Item "$env:USERPROFILE\Downloads\64bit\64bit\Ubuntu 24.10 (64bit).vdi" -Destination $VM_FOLDER
-Copy-Item "$env:USERPROFILE\Downloads\64bit (1)\64bit\Kali Linux 2024.3 (64bit).vdi" -Destination $VM_FOLDER
+#Copy-Item "$env:USERPROFILE\Downloads\64bit\64bit\Ubuntu 24.10 (64bit).vdi" -Destination $VM_FOLDER
+#Copy-Item "$env:USERPROFILE\Downloads\64bit (1)\64bit\Kali Linux 2024.3 (64bit).vdi" -Destination $VM_FOLDER
+
+Copy-Item "$env:USERPROFILE\Desktop\Jaar 2\Semester 2\Cybersecurity\Ubuntu 24.10 (64bit).vdi" -Destination $VM_FOLDER # Dit is Jamie zijn locatie
+Copy-Item "$env:USERPROFILE\Desktop\Jaar 2\Semester 2\Cybersecurity\Kali Linux 2024.3 (64bit).vdi" -Destination $VM_FOLDER # Dit is Jamie zijn locatie
 
 VBoxManage.exe createvm --name $VM_NAAM_1 --basefolder $VM_FOLDER --groups "/NPE_g" --ostype Ubuntu_64 --register
 VBoxManage.exe createvm --name $VM_NAAM_2 --basefolder $VM_FOLDER --groups "/NPE_g" --ostype Debian_64 --register

@@ -5,12 +5,35 @@ IMAGE_NAME="ghostcat-tomcat"
 CONTAINER_NAME="ghostcat"
 TOMCAT_PORT_HTTP=8080
 TOMCAT_PORT_AJP=8009
+CURRENT_USER=$(whoami)
 
 # Controleer of Docker is geïnstalleerd
 if ! command -v docker &> /dev/null; then
-    echo "Docker is niet geïnstalleerd."
-    echo "Docker wordt voor u geinstalleerd..."
+    echo "Docker is niet geïnstalleerd. Installeren..."
+    sudo apt update
     sudo apt install docker.io -y
+    sudo systemctl start docker
+    sudo systemctl enable docker
+else
+    echo "Docker is al geïnstalleerd."
+fi
+
+# Voeg de huidige gebruiker toe aan de docker-groep (indien nog niet gedaan)
+if ! groups $CURRENT_USER | grep -q docker; then
+    echo "Toevoegen van $CURRENT_USER aan de docker-groep..."
+    sudo usermod -aG docker $CURRENT_USER
+    echo "Gebruiker toegevoegd aan docker-groep. Log opnieuw in om wijzigingen toe te passen."
+    # Forceer groepswijziging in huidige sessie (alternatief voor uitloggen)
+    newgrp docker
+else
+    echo "$CURRENT_USER is al lid van de docker-groep."
+fi
+
+# Maak een .dockerignore om IBUS-cachefouten te vermijden
+if [ ! -f .dockerignore ]; then
+    echo "Aanmaken van .dockerignore..."
+    echo ".cache" > .dockerignore
+    echo ".dockerignore" >> .dockerignore
 fi
 
 # Bouw de Docker-image
@@ -31,13 +54,13 @@ docker run -d -p $TOMCAT_PORT_HTTP:8080 -p $TOMCAT_PORT_AJP:8009 --name $CONTAIN
 # Controleer of de container draait
 if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
     echo "Tomcat-container draait op poorten $TOMCAT_PORT_HTTP (HTTP) en $TOMCAT_PORT_AJP (AJP)."
-    echo "Controleer toegang via: http://<VM_IP>:$TOMCAT_PORT_HTTP"
+    echo "Controleer toegang via: http://192.168.56.106:$TOMCAT_PORT_HTTP"
 else
     echo "Fout: Container kon niet worden gestart."
     exit 1
 fi
 
-# scan de poorten
+# Scan de poorten
 if command -v nmap &> /dev/null; then
     echo "Scannen van poorten $TOMCAT_PORT_HTTP en $TOMCAT_PORT_AJP..."
     nmap localhost -p $TOMCAT_PORT_HTTP,$TOMCAT_PORT_AJP
