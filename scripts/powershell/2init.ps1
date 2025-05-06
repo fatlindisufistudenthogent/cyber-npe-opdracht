@@ -36,7 +36,7 @@ checkVMsExcists
 
 New-Item -Path $VM_FOLDER -ItemType Directory
 
-$VM_VDI_PAD_1 = Join-Path $VM_FOLDER "64bit" "Ubuntu 24.10 (64bit).vdi"
+$VM_VDI_PAD_1 = Join-Path (Join-Path $VM_FOLDER "64bit") "Ubuntu 24.10 (64bit).vdi"
 # $VM_VDI_PAD_2 = Join-Path $VM_FOLDER "Kali Linux 2024.3 (64bit).vdi"
 
 $VM_GEBRUIKERSNAAM_1, $VM_GEBRUIKERSNAAM_2 = "osboxes", "osboxes.org"
@@ -48,14 +48,14 @@ write-Host "De volgende Virtuele Machines worden geinstalleerd en geconfigureerd
 Start-Sleep -Seconds 3
 
 if ($RES) {
-    #Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EcHq8yP1fO5Ms5mIhfwiPkMBOemVCiv94_LffmD_j78WSQ?download=1" `
-     #   -OutFile $(Join-Path $VM_FOLDER "Downloads" "deel1.7z") > $null 2>&1
+    Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EcHq8yP1fO5Ms5mIhfwiPkMBOemVCiv94_LffmD_j78WSQ?download=1" `
+        -OutFile $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z") > $null 2>&1
     #Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EbIggjbOMNpFsDRfylf9QGcB2eToYLgYh-yBIOu54u3ueA?download=1" `
       #  -OutFile $(Join-Path $VM_FOLDER "Downloads" "deel2.7z") > $null 2>&1
 }
 else {
     Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EcHq8yP1fO5Ms5mIhfwiPkMBOemVCiv94_LffmD_j78WSQ?download=1" `
-        -OutFile $(Join-Path $env:HOME "Downloads" "deel1.7z") > $null 2>&1
+        -OutFile $(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z") > $null 2>&1
     #Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EbIggjbOMNpFsDRfylf9QGcB2eToYLgYh-yBIOu54u3ueA?download=1" `
     #   -OutFile $(Join-Path $VM_FOLDER "Downloads" "deel2.7z") > $null 2>&1
 }
@@ -67,7 +67,8 @@ Start-Sleep -Seconds 3
 Write-Host "9999999" -ForegroundColor red
 
 if ($RES) {
-    #7z x $(Join-Path $env:USERPROFILE "Downloads" "deel1.7z") -o$(Join-Path $VM_FOLDER "1.7z")
+    $env:PATH += ";C:\Program Files\7-Zip\"
+    7z x "$(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z")" "-o$VM_FOLDER"
     #7z x $(Join-Path $VM_FOLDER "Downloads" "deel2.7z") -o$(Join-Path $VM_FOLDER "2.7z")
 }
 else {
