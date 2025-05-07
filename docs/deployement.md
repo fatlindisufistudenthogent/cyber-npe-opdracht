@@ -6,10 +6,10 @@
 
 Voor te installeren hebben we twee scripts voorzien
 
-1. init.ps1, voor als u de vdi's al op uw computer heeft staan: u moet zelf vdi's in de desbetreffende pad zetten namelijk:
+1. init.ps1; deze werkt enkel op Windows + voor als u de vdi's al op uw computer heeft staan: u moet zelf vdi's in de desbetreffende pad zetten namelijk:
    - \user\ [naam_gebruiker]\Downloads\64bit\64bit\ [vdi]) voor eerste vdi
    - \user\ [naam_gebruiker]\Downloads\64bit (1)\64bit\ [vdi] voor tweede vdi
-2. 2init.ps1, dit is een complete automatisatie, u hoeft niets te doen (vdi's worden van uit het internet afgehaald en geplaatst in het correcte pad)
+2. 2init.ps1; deze werkt zowel op Windows als Linux + dit is een complete automatisatie: u hoeft niets te doen (vdi's worden van uit het internet afgehaald en geplaatst in het correcte pad)
 
 In deze installatie wordt er gebruik gemaakt van
 
@@ -17,6 +17,8 @@ In deze installatie wordt er gebruik gemaakt van
 - Kali Linux 2024.3 (64bit) vdi
 
 **Opgelet**: Zorg ervoor dat deze vdi's niet reeds op uw computer staan om conflicten te vermijden. 
+
+Voor alles te deinstalleren voert u het script nog een keer uit in de terminal, er wordt om bevestiging gevraagd.
 
 ...
 
