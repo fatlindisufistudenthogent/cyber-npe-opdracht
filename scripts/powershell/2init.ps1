@@ -44,7 +44,7 @@ New-Item -Path $VM_FOLDER -ItemType Directory > $null 2>&1
 $VM_VDI_PAD_1 = Join-Path (Join-Path $VM_FOLDER "64bit") "Ubuntu 24.10 (64bit).vdi"
 $VM_VDI_PAD_2 = Join-Path (Join-Path $VM_FOLDER "64bit") "Kali Linux 2024.3 (64bit).vdi"
 
-$VM_GEBRUIKERSNAAM_1, $VM_GEBRUIKERSNAAM_2 = "osboxes", "osboxes.org"
+$VM_GEBRUIKERSNAAM_1, $VM_GEBRUIKERSNAAM_2 = "osboxes.org", "osboxes"
 $VM_PASSWOORD_1, $VM_PASSWOORD_2 = "osboxes.org", "osboxes.org"
 
 write-Host "De volgende Virtuele Machines worden geinstalleerd en geconfigureerd:
