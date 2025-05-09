@@ -7,7 +7,9 @@ function checkVMsExcists {
         [string]$folder,
         [string]$vm_1,
         [string]$vm_2,
-        [bool]$vbxnet_made
+        [bool]$vbxnet_made,
+        [string]$name_vbxnet,
+        [bool]$res
     )
     if (Test-Path $folder) {
         Write-Host "De map $folder bestaat al." -foregroundcolor Yellow
@@ -16,14 +18,20 @@ function checkVMsExcists {
             Write-Host "Afsluiten zonder wijzigingen aan te brengen."
             exit 0
         }
+        if ($res){
+            Get-Process | Where-Object { $_.ProcessName -like "*VBox*" -or $_.ProcessName -like "*VirtualBox*" } | Stop-Process -Force > $null 2>&1
+            
+        }else{
+            pkill -f VirtualBox > $null 2>&1 #VBox process kill
+        }
         Write-Host "Verwijderen van bestaande virtuele machines en settings..."
         VBoxManage unregistervm $vm_1 --delete > $null 2>&1
         VBoxManage unregistervm $vm_2 --delete > $null 2>&1
         if ($vbxnet_made -eq $true) {
-            VBoxManage hostonlyif remove "vboxnet0" > $null 2>&1
+            VBoxManage hostonlyif remove "$name_vbxnet" > $null 2>&1
         }
         Remove-Item -Recurse -Force $folder > $null 2>&1
-        if ($RES) {
+        if ($res) {
             Remove-Item -Recurse -Force $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z") > $null 2>&1
             Remove-Item -Recurse -Force $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z") > $null 2>&1
         }
@@ -46,14 +54,29 @@ else {
     $RES = $true
 }
 
-$LIST_ONJECTS = $(vboxmanage list hostonlyifs | where-Object { $_ -match "Name:\s+vboxnet[0-9]" })
 $VBXNET_MADE = $false
+
+if ($RES) {
+    $LIST_ONJECTS = $(vboxmanage list hostonlyifs | where-Object { $_ -match "Name:\s+VirtualBox Host-Only Ethernet Adapter\s*" })
+    
+    if ($LIST_ONJECTS.Count -eq "0") {
+    VBoxManage hostonlyif create > $null 2>&1
+    $VBXNET_MADE = $true
+    }
+    
+checkVMsExcists -folder $VM_FOLDER -vm_1 $VM_NAAM_1 -vm2 $VM_NAAM_2 -vbxnet_made $VBXNET_MADE -name_vbxnet "VirtualBox Host-Only Ethernet Adapter" -res $RES
+}
+else {
+$LIST_ONJECTS = $(vboxmanage list hostonlyifs | where-Object { $_ -match "Name:\s+vboxnet[0-9]" })
+
 if ($LIST_ONJECTS.Count -eq "0") {
     VBoxManage hostonlyif create > $null 2>&1
     $VBXNET_MADE = $true
 }
 
-checkVMsExcists -folder $VM_FOLDER -vm_1 $VM_NAAM_1 -vm2 $VM_NAAM_2 -vbxnet_made $VBXNET_MADE
+checkVMsExcists -folder $VM_FOLDER -vm_1 $VM_NAAM_1 -vm2 $VM_NAAM_2 -vbxnet_made $VBXNET_MADE -name_vbxnet "vboxnet0" -res $RES
+}
+
 
 New-Item -Path $VM_FOLDER -ItemType Directory > $null 2>&1
 
@@ -116,7 +139,14 @@ VBoxManage createvm --name $VM_NAAM_1 --basefolder $VM_FOLDER --groups "/NPE_g" 
 VBoxManage createvm --name $VM_NAAM_2 --basefolder $VM_FOLDER --groups "/NPE_g" --ostype Debian_64 --register > $null 2>&1
 
 VBoxManage modifyvm $VM_NAAM_1 --memory 2048 --cpus 2 --vram 64 --nic1 intnet > $null 2>&1
-VBoxManage modifyvm $VM_NAAM_2 --memory 2048 --cpus 2 --vram 64 --nic1 intnet --nic2 hostonly --hostonlyadapter2 "vboxnet0" > $null 2>&1
+if ($RES){
+    VBoxManage modifyvm $VM_NAAM_2 --memory 2048 --cpus 2 --vram 64 --nic1 intnet --nic2 hostonly --hostonlyadapter2 "VirtualBox Host-Only Ethernet Adapter" > $null 2>&1
+
+}
+else{
+    VBoxManage modifyvm $VM_NAAM_2 --memory 2048 --cpus 2 --vram 64 --nic1 intnet --nic2 hostonly --hostonlyadapter2 "vboxnet0" > $null 2>&1
+
+}
 
 VBoxManage storagectl $VM_NAAM_1 --name "SATA Controller" --add sata --controller IntelAhci > $null 2>&1
 VBoxManage storagectl $VM_NAAM_2 --name "SATA Controller" --add sata --controller IntelAhci > $null 2>&1
