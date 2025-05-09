@@ -18,11 +18,14 @@ function checkVMsExcists {
             Write-Host "Afsluiten zonder wijzigingen aan te brengen."
             exit 0
         }
-        if ($res){
-            Get-Process | Where-Object { $_.ProcessName -like "*VBox*" -or $_.ProcessName -like "*VirtualBox*" } | Stop-Process -Force > $null 2>&1
+        if ($res) {
+            Get-Process | Where-Object { 
+                $_.ProcessName -like "*VBox*" -or 
+                $_.ProcessName -like "*VirtualBox*" } | Stop-Process -Force > $null 2>&1
             
-        }else{
-            pkill -f VirtualBox > $null 2>&1 #VBox process kill
+        }
+        else {
+            pkill -f VirtualBox > $null 2>&1
         }
         Write-Host "Verwijderen van bestaande virtuele machines en settings..."
         VBoxManage unregistervm $vm_1 --delete > $null 2>&1
@@ -30,14 +33,20 @@ function checkVMsExcists {
         if ($vbxnet_made -eq $true) {
             VBoxManage hostonlyif remove "$name_vbxnet" > $null 2>&1
         }
-        Remove-Item -Recurse -Force $folder > $null 2>&1
+        Remove-Item -Path $folder `
+            -Recurse `
+            -Force > $null 2>&1
         if ($res) {
-            Remove-Item -Recurse -Force $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z") > $null 2>&1
-            Remove-Item -Recurse -Force $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z") > $null 2>&1
+            Remove-Item -Recurse `
+                -Force $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z") > $null 2>&1
+            Remove-Item -Recurse `
+                -Force $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z") > $null 2>&1
         }
         else {
-            Remove-Item -Recurse -Force $(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z") > $null 2>&1
-            Remove-Item -Recurse -Force $(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z") > $null 2>&1
+            Remove-Item -Recurse `
+                -Force $(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z") > $null 2>&1
+            Remove-Item -Recurse `
+                -Force $(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z") > $null 2>&1
         }
         
         Write-Host "Bestaande virtuele machines en settings zijn verwijderd." -ForegroundColor Green
@@ -60,21 +69,54 @@ if ($RES) {
     $LIST_ONJECTS = $(vboxmanage list hostonlyifs | where-Object { $_ -match "Name:\s+VirtualBox Host-Only Ethernet Adapter\s*" })
     
     if ($LIST_ONJECTS.Count -eq "0") {
-    VBoxManage hostonlyif create > $null 2>&1
-    $VBXNET_MADE = $true
+        VBoxManage hostonlyif create > $null 2>&1
+        VBoxManage hostonlyif ipconfig "VirtualBox Host-Only Ethernet Adapter" --ip 192.168.56.1 `
+            --netmask 255.255.255.0
+        VBoxManage dhcpserver add --ifname "VirtualBox Host-Only Ethernet Adapter" `
+            --ip 192.168.56.2 `
+            --netmask 255.255.255.0 `
+            --lowerip 192.168.56.3 `
+            --upperip 192.168.56.4 `
+            --enable
     }
     
-checkVMsExcists -folder $VM_FOLDER -vm_1 $VM_NAAM_1 -vm2 $VM_NAAM_2 -vbxnet_made $VBXNET_MADE -name_vbxnet "VirtualBox Host-Only Ethernet Adapter" -res $RES
+    if ($LIST_ONJECTS.Count -eq "1") {
+        $VBXNET_MADE = $true
+    }
+
+    checkVMsExcists -folder $VM_FOLDER `
+        -vm_1 $VM_NAAM_1 `
+        -vm2 $VM_NAAM_2 `
+        -vbxnet_made $VBXNET_MADE `
+        -name_vbxnet "VirtualBox Host-Only Ethernet Adapter" `
+        -res $RES
+    
 }
 else {
-$LIST_ONJECTS = $(vboxmanage list hostonlyifs | where-Object { $_ -match "Name:\s+vboxnet[0-9]" })
+    $LIST_ONJECTS = $(vboxmanage list hostonlyifs | where-Object { $_ -match "Name:\s+vboxnet[0-9]" })
 
-if ($LIST_ONJECTS.Count -eq "0") {
-    VBoxManage hostonlyif create > $null 2>&1
-    $VBXNET_MADE = $true
-}
+    if ($LIST_ONJECTS.Count -eq "0") {
+        VBoxManage hostonlyif create > $null 2>&1
+        VBoxManage hostonlyif ipconfig "vboxnet0" --ip 192.168.56.1 `
+            --netmask 255.255.255.0
+        VBoxManage dhcpserver add --ifname "vboxnet0" `
+            --ip 192.168.56.2 `
+            --netmask 255.255.255.0 `
+            --lowerip 192.168.56.3 `
+            --upperip 192.168.56.4 `
+            --enable
+    }
 
-checkVMsExcists -folder $VM_FOLDER -vm_1 $VM_NAAM_1 -vm2 $VM_NAAM_2 -vbxnet_made $VBXNET_MADE -name_vbxnet "vboxnet0" -res $RES
+    if ($LIST_ONJECTS.Count -eq "1") {
+        $VBXNET_MADE = $true
+    }
+
+    checkVMsExcists -folder $VM_FOLDER `
+        -vm_1 $VM_NAAM_1 `
+        -vm2 $VM_NAAM_2 `
+        -vbxnet_made $VBXNET_MADE `
+        -name_vbxnet "vboxnet0" `
+        -res $RES
 }
 
 
@@ -103,15 +145,12 @@ if ($RES) {
         -OutFile $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z") > $null 2>&1
 }
 else {
-
-    Write-Host "[PROGRESS] [2/6] Downloaden van tweede 7zip map..."
-    Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EbIggjbOMNpFsDRfylf9QGcB2eToYLgYh-yBIOu54u3ueA?download=1" `
-        -OutFile $(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z") > $null 2>&1
-
-
     Write-Host "[PROGRESS] [1/6] Downloaden van eerste 7zip map..."
     Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EcHq8yP1fO5Ms5mIhfwiPkMBOemVCiv94_LffmD_j78WSQ?download=1" `
         -OutFile $(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z") > $null 2>&1
+    Write-Host "[PROGRESS] [2/6] Downloaden van tweede 7zip map..."
+    Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EbIggjbOMNpFsDRfylf9QGcB2eToYLgYh-yBIOu54u3ueA?download=1" `
+        -OutFile $(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z") > $null 2>&1
 }
 
 if ($RES) {
@@ -125,34 +164,74 @@ if ($RES) {
 else {
     Write-Host "[PROGRESS] [3/6] Toevoegen van 7zip aan de omgevingsvariabele PATH..." > $null 2>&1
     $env:PATH += ":/usr/bin/7z"
-    Write-Host "[PROGRESS] [5/6] Uitpakken van tweede 7zip map..."
-    7z x "$(Join-Path $env:HOME "Downloads" "deel2.7z")" "-o$VM_FOLDER" > $null 2>&1
-
     Write-Host "[PROGRESS] [4/6] Uitpakken van eerste 7zip map..."
-    7z x "$(Join-Path $env:HOME "Downloads" "deel1.7z")" "-o$VM_FOLDER" > $null 2>&1
+    7z x "$(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z")" "-o$VM_FOLDER" > $null 2>&1
+    Write-Host "[PROGRESS] [5/6] Uitpakken van tweede 7zip map..."
+    7z x "$(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z")" "-o$VM_FOLDER" > $null 2>&1
 }
 
 Write-Host "VDI's geinstalleerd!" -ForegroundColor Green
 Write-Host "[PROGRESS] [6/6] Virtuele machines aanmaken & configureren..."
 
-VBoxManage createvm --name $VM_NAAM_1 --basefolder $VM_FOLDER --groups "/NPE_g" --ostype Ubuntu_64 --register > $null 2>&1
-VBoxManage createvm --name $VM_NAAM_2 --basefolder $VM_FOLDER --groups "/NPE_g" --ostype Debian_64 --register > $null 2>&1
+VBoxManage createvm --name $VM_NAAM_1 `
+    --basefolder $VM_FOLDER `
+    --groups "/NPE_g" `
+    --ostype Ubuntu_64 `
+    --register > $null 2>&1
 
-VBoxManage modifyvm $VM_NAAM_1 --memory 2048 --cpus 2 --vram 64 --nic1 intnet > $null 2>&1
-if ($RES){
-    VBoxManage modifyvm $VM_NAAM_2 --memory 2048 --cpus 2 --vram 64 --nic1 intnet --nic2 hostonly --hostonlyadapter2 "VirtualBox Host-Only Ethernet Adapter" > $null 2>&1
+VBoxManage createvm --name $VM_NAAM_2 `
+    --basefolder $VM_FOLDER `
+    --groups "/NPE_g" `
+    --ostype Debian_64 `
+    --register > $null 2>&1
+
+if ($RES) {
+    VBoxManage modifyvm $VM_NAAM_1 --memory 2048 `
+        --cpus 2 `
+        --vram 64 `
+        --nic1 hostonly `
+        --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter" > $null 2>&1
+
+    VBoxManage modifyvm $VM_NAAM_2 --memory 2048 `
+        --cpus 2 `
+        --vram 64 `
+        --nic1 hostonly `
+        --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter" > $null 2>&1
+}
+else {
+    VBoxManage modifyvm $VM_NAAM_1 --memory 2048 `
+        --cpus 2 `
+        --vram 64 `
+        --nic1 hostonly `
+        --hostonlyadapter1 "vboxnet0" > $null 2>&1
+
+    VBoxManage modifyvm $VM_NAAM_2 --memory 2048 `
+        --cpus 2 `
+        --vram 64 `
+        --nic1 hostonly `
+        --hostonlyadapter1 "vboxnet0" > $null 2>&1
 
 }
-else{
-    VBoxManage modifyvm $VM_NAAM_2 --memory 2048 --cpus 2 --vram 64 --nic1 intnet --nic2 hostonly --hostonlyadapter2 "vboxnet0" > $null 2>&1
 
-}
+VBoxManage storagectl $VM_NAAM_1 --name "SATA Controller" `
+    --add sata `
+    --controller IntelAhci > $null 2>&1
 
-VBoxManage storagectl $VM_NAAM_1 --name "SATA Controller" --add sata --controller IntelAhci > $null 2>&1
-VBoxManage storagectl $VM_NAAM_2 --name "SATA Controller" --add sata --controller IntelAhci > $null 2>&1
+VBoxManage storagectl $VM_NAAM_2 --name "SATA Controller" `
+    --add sata `
+    --controller IntelAhci > $null 2>&1
 
-VBoxManage storageattach $VM_NAAM_1 --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium $VM_VDI_PAD_1 > $null 2>&1
-VBoxManage storageattach $VM_NAAM_2 --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium $VM_VDI_PAD_2 > $null 2>&1
+VBoxManage storageattach $VM_NAAM_1 --storagectl "SATA Controller" `
+    --port 0 `
+    --device 0 `
+    --type hdd `
+    --medium $VM_VDI_PAD_1 > $null 2>&1
+
+VBoxManage storageattach $VM_NAAM_2 --storagectl "SATA Controller" `
+    --port 0 `
+    --device 0 `
+    --type hdd `
+    --medium $VM_VDI_PAD_2 > $null 2>&1
 
 VBoxManage modifyvm $VM_NAAM_1 --boot1 disk > $null 2>&1
 VBoxManage modifyvm $VM_NAAM_2 --boot1 disk > $null 2>&1
