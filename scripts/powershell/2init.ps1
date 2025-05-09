@@ -71,13 +71,13 @@ if ($RES) {
     if ($LIST_ONJECTS.Count -eq "0") {
         VBoxManage hostonlyif create > $null 2>&1
         VBoxManage hostonlyif ipconfig "VirtualBox Host-Only Ethernet Adapter" --ip 192.168.56.1 `
-            --netmask 255.255.255.0
+            --netmask 255.255.255.0 > $null 2>&1
         VBoxManage dhcpserver add --ifname "VirtualBox Host-Only Ethernet Adapter" `
             --ip 192.168.56.2 `
             --netmask 255.255.255.0 `
             --lowerip 192.168.56.3 `
             --upperip 192.168.56.4 `
-            --enable
+            --enable > $null 2>&1
     }
     
     if ($LIST_ONJECTS.Count -eq "1") {
@@ -98,13 +98,13 @@ else {
     if ($LIST_ONJECTS.Count -eq "0") {
         VBoxManage hostonlyif create > $null 2>&1
         VBoxManage hostonlyif ipconfig "vboxnet0" --ip 192.168.56.1 `
-            --netmask 255.255.255.0
+            --netmask 255.255.255.0 > $null 2>&1
         VBoxManage dhcpserver add --ifname "vboxnet0" `
             --ip 192.168.56.2 `
             --netmask 255.255.255.0 `
             --lowerip 192.168.56.3 `
             --upperip 192.168.56.4 `
-            --enable
+            --enable > $null 2>&1
     }
 
     if ($LIST_ONJECTS.Count -eq "1") {
