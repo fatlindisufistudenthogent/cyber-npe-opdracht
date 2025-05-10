@@ -183,14 +183,13 @@ if ($RES) {
     7z x "$(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z")" "-o$VM_FOLDER" > $null 2>&1
 }
 else {
-    Write-Host "[PROGRESS] [3/5] Toevoegen van 7zip aan de omgevingsvariabele PATH..." > $null 2>&1
     $PRGM = $($env:PATH -split ":" | ForEach-Object { $_ } | Where-Object { $_ -eq "/usr/bin/7z" } | Select-Object -First 1)
     if ($PRGM -ne "/usr/bin/7z") {
         $env:PATH += ":/usr/bin/7z"
     }
-    Write-Host "[PROGRESS] [4/5] Uitpakken van eerste 7zip map..."
+    Write-Host "[PROGRESS] [3/5] Uitpakken van eerste 7zip map..."
     7z x "$(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z")" "-o$VM_FOLDER" > $null 2>&1
-    Write-Host "[PROGRESS] [5/5] Uitpakken van tweede 7zip map..."
+    Write-Host "[PROGRESS] [4/5] Uitpakken van tweede 7zip map..."
     7z x "$(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z")" "-o$VM_FOLDER" > $null 2>&1
 }
 
