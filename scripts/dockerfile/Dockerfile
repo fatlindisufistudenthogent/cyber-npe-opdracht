@@ -29,8 +29,9 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-9/v${TOMCAT_VERSION}/b
 RUN sed -i '/<Connector port="8080"/i \
     <Connector port="8009" protocol="AJP/1.3" address="0.0.0.0" secretRequired="false" />' ${TOMCAT_DIR}/conf/server.xml
 
-# Voeg een testbestand toe om de kwetsbaarheid te demonstreren
+# Voeg testbestanden toe om de kwetsbaarheid te demonstreren
 RUN echo "<web-app><display-name>TestApp</display-name></web-app>" > ${TOMCAT_DIR}/webapps/ROOT/WEB-INF/web.xml
+RUN echo "Geheime configuratie: admin:password123" > ${TOMCAT_DIR}/webapps/ROOT/WEB-INF/secret.txt
 
 # Expose poorten
 EXPOSE 8080 8009
