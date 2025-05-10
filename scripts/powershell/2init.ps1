@@ -65,7 +65,14 @@ else {
 
 $VBXNET_MADE = $false
 
+
 if ($RES) {
+
+    $PRGM = $($env:PATH -split ";" | ForEach-Object { $_ } | Where-Object { $_ -eq "C:\Program Files\Oracle\VirtualBox" } | Select-Object -First 1)
+    if ($PRGM -ne "C:\Program Files\Oracle\VirtualBox") {
+        $env:PATH += ";C:\Program Files\Oracle\VirtualBox"
+    }
+
     $LIST_ONJECTS = $(vboxmanage list hostonlyifs | where-Object { $_ -match "Name:\s+VirtualBox Host-Only Ethernet Adapter\s*" })
     
     if ($LIST_ONJECTS.Count -eq "0") {
@@ -93,6 +100,17 @@ if ($RES) {
     
 }
 else {
+
+    $PRGM = $($env:PATH -split ";" | ForEach-Object { $_ } | Where-Object { $_ -eq "/usr/bin/vboxmanage" } | Select-Object -First 1)
+    if ($PRGM -ne "/usr/bin/vboxmanage") {
+        $env:PATH += ":/usr/bin/vboxmanage"
+    }
+
+    $PRGM = $($env:PATH -split ";" | ForEach-Object { $_ } | Where-Object { $_ -eq "/usr/bin/virtualbox" } | Select-Object -First 1)
+    if ($PRGM -ne "/usr/bin/virtualbox") {
+        $env:PATH += ":/usr/bin/virtualbox"
+    }
+
     $LIST_ONJECTS = $(vboxmanage list hostonlyifs | where-Object { $_ -match "Name:\s+vboxnet[0-9]" })
 
     if ($LIST_ONJECTS.Count -eq "0") {
@@ -190,26 +208,30 @@ if ($RES) {
         --cpus 2 `
         --vram 64 `
         --nic1 hostonly `
-        --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter" > $null 2>&1
+        --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter" `
+        --nic2 nat > $null 2>&1
 
     VBoxManage modifyvm $VM_NAAM_2 --memory 2048 `
         --cpus 2 `
         --vram 64 `
         --nic1 hostonly `
-        --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter" > $null 2>&1
+        --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter" `
+        --nic2 nat > $null 2>&1
 }
 else {
     VBoxManage modifyvm $VM_NAAM_1 --memory 2048 `
         --cpus 2 `
         --vram 64 `
         --nic1 hostonly `
-        --hostonlyadapter1 "vboxnet0" > $null 2>&1
+        --hostonlyadapter1 "vboxnet0" `
+        --nic2 nat > $null 2>&1
 
     VBoxManage modifyvm $VM_NAAM_2 --memory 2048 `
         --cpus 2 `
         --vram 64 `
         --nic1 hostonly `
-        --hostonlyadapter1 "vboxnet0" > $null 2>&1
+        --hostonlyadapter1 "vboxnet0" `
+        --nic2 nat > $null 2>&1
 
 }
 
