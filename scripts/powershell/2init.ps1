@@ -173,7 +173,10 @@ else {
 
 if ($RES) {
     Write-Host "[PROGRESS] [3/6] Toevoegen van 7zip aan de omgevingsvariabele PATH..." > $null 2>&1
-    $env:PATH += ";C:\Program Files\7-Zip\"
+    $PRGM = $($env:PATH -split ";" | ForEach-Object { $_ } | Where-Object { $_ -eq "C:\Program Files\7-Zip" } | Select-Object -First 1)
+    if ($PRGM -ne "C:\Program Files\7-Zip") {
+        $env:PATH += ";C:\Program Files\7-Zip"
+    }
     Write-Host "[PROGRESS] [4/6] Uitpakken van eerste 7zip map..."
     7z x "$(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z")" "-o$VM_FOLDER" > $null 2>&1
     Write-Host "[PROGRESS] [5/6] Uitpakken van tweede 7zip map..."
@@ -181,7 +184,10 @@ if ($RES) {
 }
 else {
     Write-Host "[PROGRESS] [3/6] Toevoegen van 7zip aan de omgevingsvariabele PATH..." > $null 2>&1
-    $env:PATH += ":/usr/bin/7z"
+    $PRGM = $($env:PATH -split ":" | ForEach-Object { $_ } | Where-Object { $_ -eq "/usr/bin/7z" } | Select-Object -First 1)
+    if ($PRGM -ne "/usr/bin/7z") {
+        $env:PATH += ":/usr/bin/7z"
+    }
     Write-Host "[PROGRESS] [4/6] Uitpakken van eerste 7zip map..."
     7z x "$(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z")" "-o$VM_FOLDER" > $null 2>&1
     Write-Host "[PROGRESS] [5/6] Uitpakken van tweede 7zip map..."
