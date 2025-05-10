@@ -6,27 +6,27 @@ CONTAINER_NAME="ghostcat"
 TOMCAT_PORT_HTTP=8080
 TOMCAT_PORT_AJP=8009
 CURRENT_USER=$(whoami)
-WORKDIR="$HOME/ghostcat"
+# Gebruik de directory van het script
+WORKDIR="$(dirname "$(realpath "$0")")"
 
-# Automatisch het IP-adres ophalen (eerste niet-loopback IPv4-adres)
+# Automatisch het IP-adres ophalen
 UBUNTU_IP=$(ip -4 addr show | grep -v '127.0.0.1' | grep -oP 'inet \K[\d.]+' | head -n 1)
 if [ -z "$UBUNTU_IP" ]; then
-    echo "Fout: Kon geen IP-adres detecteren. Controleer de netwerkconfiguratie."
+    echo "Fout: Kon geen IP-adres detecteren."
     exit 1
 fi
 echo "Gedetecteerd IP-adres: $UBUNTU_IP"
 
-# Maak werkmap aan
-mkdir -p "$WORKDIR"
-cd "$WORKDIR" || exit 1
+# Navigeer naar de scriptdirectory
+cd "$WORKDIR" || { echo "Fout: Kan niet navigeren naar $WORKDIR"; exit 1; }
 
 # Controleer of Docker is geïnstalleerd
 if ! command -v docker &> /dev/null; then
     echo "Docker is niet geïnstalleerd. Installeren..."
-    sudo apt-get update
-    sudo apt-get install -y docker.io
-    sudo systemctl start docker
-    sudo systemctl enable docker
+    apt-get update
+    apt-get install -y docker.io
+    systemctl start docker
+    systemctl enable docker
 else
     echo "Docker is al geïnstalleerd."
 fi
@@ -34,13 +34,10 @@ fi
 # Voeg huidige gebruiker toe aan docker-groep
 if ! groups "$CURRENT_USER" | grep -q docker; then
     echo "Toevoegen van $CURRENT_USER aan docker-groep..."
-    sudo usermod -aG docker "$CURRENT_USER"
-    # Forceer groepswijziging in huidige sessie
+    usermod -aG docker "$CURRENT_USER"
     newgrp docker << EOF
     echo "Gebruiker toegevoegd aan docker-groep."
 EOF
-else
-    echo "$CURRENT_USER is al lid van de docker-groep."
 fi
 
 # Controleer of de Dockerfile bestaat
@@ -53,7 +50,7 @@ fi
 echo "Bouwen van de Docker-image..."
 docker build -t "$IMAGE_NAME" .
 
-# Controleer of de container al draait, zo ja, stop en verwijder deze
+# Controleer of de container al draait
 if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
     echo "Container $CONTAINER_NAME draait al. Stoppen en verwijderen..."
     docker stop "$CONTAINER_NAME"
@@ -70,6 +67,7 @@ if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
     echo "Controleer toegang via: http://$UBUNTU_IP:$TOMCAT_PORT_HTTP"
 else
     echo "Fout: Container kon niet worden gestart."
+    docker logs "$CONTAINER_NAME"
     exit 1
 fi
 
@@ -78,8 +76,8 @@ if command -v nmap &> /dev/null; then
     echo "Scannen van poorten $TOMCAT_PORT_HTTP en $TOMCAT_PORT_AJP..."
     nmap "$UBUNTU_IP" -p "$TOMCAT_PORT_HTTP,$TOMCAT_PORT_AJP"
 else
-    echo "Nmap niet geïnstalleerd. Installeer met: sudo apt install nmap (optioneel)."
+    echo "Nmap niet geïnstalleerd. Installeer met: apt install nmap (optioneel)."
 fi
 
-# Schrijf een log voor reproduceerbaarheid
+
 echo "Setup voltooid op $(date). Container: $CONTAINER_NAME, IP: $UBUNTU_IP, Poorten: $TOMCAT_PORT_HTTP, $TOMCAT_PORT_AJP" >> setup_log.txt
