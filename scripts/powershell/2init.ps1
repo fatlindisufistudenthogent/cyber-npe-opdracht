@@ -154,48 +154,48 @@ Start-Sleep -Seconds 3
 Clear-Host
 
 if ($RES) {
-    Write-Host "[PROGRESS] [1/6] Downloaden van eerste 7zip map..."
+    Write-Host "[PROGRESS] [1/5] Downloaden van eerste 7zip map..."
     Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EcHq8yP1fO5Ms5mIhfwiPkMBOemVCiv94_LffmD_j78WSQ?download=1" `
         -OutFile $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z") > $null 2>&1
 
-    Write-Host "[PROGRESS] [2/6] Downloaden van tweede 7zip map..."
+    Write-Host "[PROGRESS] [2/5] Downloaden van tweede 7zip map..."
     Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EbIggjbOMNpFsDRfylf9QGcB2eToYLgYh-yBIOu54u3ueA?download=1" `
         -OutFile $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z") > $null 2>&1
 }
 else {
-    Write-Host "[PROGRESS] [1/6] Downloaden van eerste 7zip map..."
+    Write-Host "[PROGRESS] [1/5] Downloaden van eerste 7zip map..."
     Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EcHq8yP1fO5Ms5mIhfwiPkMBOemVCiv94_LffmD_j78WSQ?download=1" `
         -OutFile $(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z") > $null 2>&1
-    Write-Host "[PROGRESS] [2/6] Downloaden van tweede 7zip map..."
+    Write-Host "[PROGRESS] [2/5] Downloaden van tweede 7zip map..."
     Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EbIggjbOMNpFsDRfylf9QGcB2eToYLgYh-yBIOu54u3ueA?download=1" `
         -OutFile $(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z") > $null 2>&1
 }
 
 if ($RES) {
-    Write-Host "[PROGRESS] [3/6] Toevoegen van 7zip aan de omgevingsvariabele PATH..." > $null 2>&1
+    
     $PRGM = $($env:PATH -split ";" | ForEach-Object { $_ } | Where-Object { $_ -eq "C:\Program Files\7-Zip" } | Select-Object -First 1)
     if ($PRGM -ne "C:\Program Files\7-Zip") {
         $env:PATH += ";C:\Program Files\7-Zip"
     }
-    Write-Host "[PROGRESS] [4/6] Uitpakken van eerste 7zip map..."
+    Write-Host "[PROGRESS] [3/5] Uitpakken van eerste 7zip map..."
     7z x "$(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z")" "-o$VM_FOLDER" > $null 2>&1
-    Write-Host "[PROGRESS] [5/6] Uitpakken van tweede 7zip map..."
+    Write-Host "[PROGRESS] [4/5] Uitpakken van tweede 7zip map..."
     7z x "$(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z")" "-o$VM_FOLDER" > $null 2>&1
 }
 else {
-    Write-Host "[PROGRESS] [3/6] Toevoegen van 7zip aan de omgevingsvariabele PATH..." > $null 2>&1
+    Write-Host "[PROGRESS] [3/5] Toevoegen van 7zip aan de omgevingsvariabele PATH..." > $null 2>&1
     $PRGM = $($env:PATH -split ":" | ForEach-Object { $_ } | Where-Object { $_ -eq "/usr/bin/7z" } | Select-Object -First 1)
     if ($PRGM -ne "/usr/bin/7z") {
         $env:PATH += ":/usr/bin/7z"
     }
-    Write-Host "[PROGRESS] [4/6] Uitpakken van eerste 7zip map..."
+    Write-Host "[PROGRESS] [4/5] Uitpakken van eerste 7zip map..."
     7z x "$(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z")" "-o$VM_FOLDER" > $null 2>&1
-    Write-Host "[PROGRESS] [5/6] Uitpakken van tweede 7zip map..."
+    Write-Host "[PROGRESS] [5/5] Uitpakken van tweede 7zip map..."
     7z x "$(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z")" "-o$VM_FOLDER" > $null 2>&1
 }
 
 Write-Host "VDI's geinstalleerd!" -ForegroundColor Green
-Write-Host "[PROGRESS] [6/6] Virtuele machines aanmaken & configureren..."
+Write-Host "[PROGRESS] [5/5] Virtuele machines aanmaken & configureren..."
 
 VBoxManage createvm --name $VM_NAAM_1 `
     --basefolder $VM_FOLDER `
