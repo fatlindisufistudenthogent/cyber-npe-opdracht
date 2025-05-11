@@ -1,5 +1,5 @@
-# Op voorwaarde dat je een map op locatie c:\Users\Gebruikersnaam\VMs_NPE  
-# hebt aangemaakt met daarin de corresponderende VDI's hebt ingezet.
+# Op voorwaarde dat je op locatie C:\Users\Gebruikersnaam\Downloads 
+# daarin de corresponderende VDI's hebt ingezet.
 
 $VM_NAAM_1, $VM_NAAM_2 = "Kwetsbare_Ubuntu_VM", "Hacker_Kali_VM"
 
@@ -130,6 +130,20 @@ else {
 
 
 New-Item -Path $VM_FOLDER -ItemType Directory > $null 2>&1
+
+if ($RES) {
+    Move-Item -Path (Join-Path (Join-Path $env:USERPROFILE "Downloads") "Ubuntu 24.10 (64bit).vdi") `
+        -Destination $VM_FOLDER
+    Move-Item -Path (Join-Path (Join-Path $env:USERPROFILE "Downloads") "Kali Linux 2024.3 (64bit).vdi") `
+        -Destination $VM_FOLDER
+
+}
+else {
+    Move-Item -Path (Join-Path (Join-Path $env:HOME "Downloads") "Ubuntu 24.10 (64bit).vdi") `
+        -Destination $VM_FOLDER
+    Move-Item -Path (Join-Path (Join-Path $env:HOME "Downloads") "Kali Linux 2024.3 (64bit).vdi") `
+        -Destination $VM_FOLDER
+}
 
 $VM_VDI_PAD_1 = Join-Path $VM_FOLDER "Ubuntu 24.10 (64bit).vdi"
 $VM_VDI_PAD_2 = Join-Path $VM_FOLDER "Kali Linux 2024.3 (64bit).vdi"
