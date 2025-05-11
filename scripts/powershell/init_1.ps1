@@ -1,6 +1,10 @@
-# Op voorwaarde dat je op locatie C:\Users\Gebruikersnaam\Downloads 
-# daarin de corresponderende VDI's hebt ingezet.
-
+<#
+    Dit script maakt gebruik van de VirtualBox command line interface (CLI) 
+    om virtuele machines aan te maken en configureren. Het script controleert 
+    of de benodigde VDI-bestanden aanwezig zijn in de opgegeven map 
+    C:\Users\Gebruikersnaam\Downloads en maakt vervolgens de virtuele machines 
+    aan met de juiste instellingen.
+#>
 $VM_NAAM_1, $VM_NAAM_2 = "Kwetsbare_Ubuntu_VM", "Hacker_Kali_VM"
 
 $RES = $false
@@ -128,21 +132,28 @@ else {
         -res $RES
 }
 
+Write-Host "DISCLAIMER:`nDit script maakt gebruik van de VirtualBox command line interface (CLI) 
+om virtuele machines aan te maken en configureren. Het script controleert 
+of de benodigde VDI-bestanden aanwezig zijn in de opgegeven map 
+C:\Users\<Jouw-Gebruikersnaam>\Downloads en maakt vervolgens de virtuele machines 
+aan met de juiste instellingen." -ForegroundColor DarkYellow
+
+Pause
 
 New-Item -Path $VM_FOLDER -ItemType Directory > $null 2>&1
 
 if ($RES) {
     Move-Item -Path (Join-Path (Join-Path $env:USERPROFILE "Downloads") "Ubuntu 24.10 (64bit).vdi") `
-        -Destination $VM_FOLDER
+        -Destination $VM_FOLDER > $null 2>&1
     Move-Item -Path (Join-Path (Join-Path $env:USERPROFILE "Downloads") "Kali Linux 2024.3 (64bit).vdi") `
-        -Destination $VM_FOLDER
+        -Destination $VM_FOLDER > $null 2>&1
 
 }
 else {
     Move-Item -Path (Join-Path (Join-Path $env:HOME "Downloads") "Ubuntu 24.10 (64bit).vdi") `
-        -Destination $VM_FOLDER
+        -Destination $VM_FOLDER > $null 2>&1
     Move-Item -Path (Join-Path (Join-Path $env:HOME "Downloads") "Kali Linux 2024.3 (64bit).vdi") `
-        -Destination $VM_FOLDER
+        -Destination $VM_FOLDER > $null 2>&1
 }
 
 $VM_VDI_PAD_1 = Join-Path $VM_FOLDER "Ubuntu 24.10 (64bit).vdi"
@@ -159,7 +170,7 @@ Start-Sleep -Seconds 3
 Clear-Host
 
 Write-Host "VDI's geinstalleerd!" -ForegroundColor Green
-Write-Host "[PROGRESS] [5/5] Virtuele machines aanmaken & configureren..."
+Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [1/1] Virtuele machines aanmaken & configureren..."
 
 VBoxManage createvm --name $VM_NAAM_1 `
     --basefolder $VM_FOLDER `
