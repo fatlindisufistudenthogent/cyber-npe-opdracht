@@ -24,6 +24,9 @@ Voor alles te deinstalleren voert u het script nog een keer uit in de terminal, 
 
 ## Installatie-instructies: Stap-voor-stap instructies voor het installeren van de software. Waar de bestanden te vinden zijn (bijv. downloadlink, locatie van installatiebestanden). Vereiste rechten voor installatie (bijv. beheerdersrechten).
 
+- Ubuntu 24.10 (64bit) vdi -> 
+- Kali Linux 2024.3 (64bit) vdi -> https://sourceforge.net/projects/osboxes/files/v/vb/25-Kl-l-x/2024.3/64bit.7z/download
+
 ## Configuratie-instellingen: Configuratie-instellingen die mogelijk moeten worden aangepast om de software goed te laten functioneren. Aanpassingen aan netwerkconfiguraties, databases, services, of beveiligingsinstellingen.
 
 ## Testen: Richtlijnen voor het testen van de geïnstalleerde software om ervoor te zorgen dat deze werkt zoals verwacht. Eventuele testscenario’s of validatie van functionaliteit.
