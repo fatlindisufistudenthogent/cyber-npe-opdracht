@@ -85,6 +85,27 @@ START DE KALI VM
 
 ## Ondersteuning en foutoplossing: Veelvoorkomende problemen en oplossingen. Contactinformatie voor technische ondersteuning.
 
+indien er een probleem zou zijn met het ip adres kan je deze zelf aanpassen zodat je zeker bent welk ip adres je hebt via volgende stappen:
+in ubuntu:
+   1) ga naar het netwerkicoon
+   2) open de netwerkinstellingen
+   3) selecteer Wired
+   4) selecteer bewerken
+   5) ga naar IPv4
+   6) selecteer handmatig
+   7) kies nu een ip adress die je aan de kali vm wil geven (voorbeeld: 192.168.56.115)
+   8) stel de subnetmask in met 255.255.255.0
+   9) stel de DNS-server in met 8.8.8.8 
+in kali:
+   1) ga naar het netwerkicoon
+   2) open de netwerkinstellingen
+   3) selecteer Wired Connection 1
+   4) selecteer bewerken
+   5) ga naar IPv4
+   6) selecteer handmatig
+   7) kies nu een ip adress die je aan de kali vm wil geven (voorbeeld: 192.168.56.116)
+   8) stel de subnetmask in met 255.255.255.0
+   9) stel de DNS-server in met 8.8.8.8 
 ## Versiebeheer: Versie-informatie van de geïmplementeerde software. Veranderingen of nieuwe functies in de versie die wordt gedeployed.
 
 ## Schaling en onderhoud: Hoe het systeem kan worden opgeschaald of uitgebreid. Instructies voor regelmatige onderhoudstaken of updates na de deployment.
