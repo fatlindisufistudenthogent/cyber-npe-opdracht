@@ -85,8 +85,8 @@ START DE KALI VM
 
 ## Ondersteuning en foutoplossing: Veelvoorkomende problemen en oplossingen. Contactinformatie voor technische ondersteuning.
 
-indien er een probleem zou zijn met het ip adres kan je deze zelf aanpassen zodat je zeker bent welk ip adres je hebt via volgende stappen:
-in ubuntu:
+#indien er een probleem zou zijn met het ip adres kan je deze zelf aanpassen zodat je zeker bent welk ip adres je hebt via volgende stappen:
+#in ubuntu:
    1) ga naar het netwerkicoon
    2) open de netwerkinstellingen
    3) selecteer Wired
@@ -96,7 +96,7 @@ in ubuntu:
    7) kies nu een ip adress die je aan de kali vm wil geven (voorbeeld: 192.168.56.115)
    8) stel de subnetmask in met 255.255.255.0
    9) stel de DNS-server in met 8.8.8.8 
-in kali:
+#in kali:
    1) ga naar het netwerkicoon
    2) open de netwerkinstellingen
    3) selecteer Wired Connection 1
