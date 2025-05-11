@@ -97,6 +97,7 @@ in ubuntu:
    7) kies nu een ip adress die je aan de kali vm wil geven (voorbeeld: 192.168.56.115)
    8) stel de subnetmask in met 255.255.255.0
    9) stel de DNS-server in met 8.8.8.8
+   10) controleer nu in terminal met commando "ip a" of dit adres ook klopt
        
 in kali:
    1) ga naar het netwerkicoon
@@ -107,7 +108,8 @@ in kali:
    6) selecteer handmatig
    7) kies nu een ip adress die je aan de kali vm wil geven (voorbeeld: 192.168.56.116)
    8) stel de subnetmask in met 255.255.255.0
-   9) stel de DNS-server in met 8.8.8.8 
+   9) stel de DNS-server in met 8.8.8.8
+   10) controleer nu in terminal met commando "ip a" of dit adres ook klopt
 ## Versiebeheer: Versie-informatie van de geïmplementeerde software. Veranderingen of nieuwe functies in de versie die wordt gedeployed.
 
 ## Schaling en onderhoud: Hoe het systeem kan worden opgeschaald of uitgebreid. Instructies voor regelmatige onderhoudstaken of updates na de deployment.
