@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-sudo apt install openssh-server -y
-setxkbmap fr
+sudo apt install openssh-server -y > /dev/null 2>&1
+setxkbmap fr > /dev/null 2>&1
 
 cat /etc/netplan/01-netcfg.yaml <<EOF
 network:
@@ -17,6 +17,6 @@ network:
         addresses: [8.8.8.8]
 EOF
 
-# ?
-sudo chmod +x /home/osboxes.org/setup_tomcat.sh
-/home/osboxes.org/setup_tomcat.sh
+# je kan dit aanzetten @ Jamie of je doet handmatig
+# sudo chmod +x /home/osboxes.org/setup_tomcat.sh
+# /home/osboxes.org/setup_tomcat.sh
