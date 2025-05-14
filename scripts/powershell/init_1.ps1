@@ -19,22 +19,36 @@ function checkVMsExcists {
         [bool]$res
     )
     if (Test-Path $folder) {
-        Write-Host "De map $folder bestaat al." -foregroundcolor Yellow
-        $keuze = Read-Host "`nWilt u de bestaande virtuele machines en gerelateerde settings verwijderen? (j/n)"
+        Write-Host "WARINING: De map $folder bestaat al." -foregroundcolor DarkYellow
+        $keuze = Read-Host "`nWilt u de bestaande virtuele machines en gerelateerde settings die enkel tijdens de
+        installatie zijn gebeurd verwijderen? (j/n)"
         if ($keuze -notin @("j", "J", "ja", "Ja", "JA")) {
+            Clear-Host
             Write-Host "Afsluiten zonder wijzigingen aan te brengen."
             exit 0
         }
         if ($res) {
+            Clear-Host
             Get-Process | Where-Object { 
                 $_.ProcessName -like "*VBox*" -or 
                 $_.ProcessName -like "*VirtualBox*" } | Stop-Process -Force > $null 2>&1
-            
+            Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [1/3] Herplaatsen van de VDI's naar de \Downloads folder..."
+            Move-Item -Path $folder `
+                -Destination (Join-Path (Join-Path $env:USERPROFILE "Downloads") "Ubuntu 24.10 (64bit).vdi") > $null 2>&1
+            Move-Item -Path $folder `
+                -Destination (Join-Path (Join-Path $env:USERPROFILE "Downloads") "Kali Linux 2024.3 (64bit).vdi") > $null 2>&1
+
         }
         else {
+            Clear-Host
             pkill -f VirtualBox > $null 2>&1
+            Move-Item -Path $folder `
+                -Destination (Join-Path (Join-Path $env:HOME "Downloads") "Ubuntu 24.10 (64bit).vdi") > $null 2>&1
+            Move-Item -Path $folder `
+                -Destination (Join-Path (Join-Path $env:HOME "Downloads") "Kali Linux 2024.3 (64bit).vdi") > $null 2>&1
         }
-        Write-Host "Verwijderen van bestaande virtuele machines en settings..."
+
+        Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [2/3] Verwijderen van bestaande virtuele machines en settings..."
         VBoxManage unregistervm $vm_1 --delete > $null 2>&1
         VBoxManage unregistervm $vm_2 --delete > $null 2>&1
         if ($vbxnet_made -eq $true) {
@@ -44,7 +58,7 @@ function checkVMsExcists {
             -Recurse `
             -Force > $null 2>&1
         
-        Write-Host "Bestaande virtuele machines en settings zijn verwijderd." -ForegroundColor Green
+        Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [3/3] Bestaande virtuele machines en settings zijn verwijderd."
         exit 0
     
     } 
@@ -88,7 +102,7 @@ if ($RES) {
 
     checkVMsExcists -folder $VM_FOLDER `
         -vm_1 $VM_NAAM_1 `
-        -vm2 $VM_NAAM_2 `
+        -vm_2 $VM_NAAM_2 `
         -vbxnet_made $VBXNET_MADE `
         -name_vbxnet "VirtualBox Host-Only Ethernet Adapter" `
         -res $RES
@@ -126,19 +140,21 @@ else {
 
     checkVMsExcists -folder $VM_FOLDER `
         -vm_1 $VM_NAAM_1 `
-        -vm2 $VM_NAAM_2 `
+        -vm_2 $VM_NAAM_2 `
         -vbxnet_made $VBXNET_MADE `
         -name_vbxnet "vboxnet0" `
         -res $RES
 }
 
-Write-Host "DISCLAIMER:`nDit script maakt gebruik van de VirtualBox command line interface (CLI) 
+Write-Host "WARINING:`nDit script maakt gebruik van de VirtualBox command line interface (CLI) 
 om virtuele machines aan te maken en configureren. Het script controleert 
 of de benodigde VDI-bestanden aanwezig zijn in de opgegeven map 
 C:\Users\<Jouw-Gebruikersnaam>\Downloads en maakt vervolgens de virtuele machines 
 aan met de juiste instellingen." -ForegroundColor DarkYellow
 
 Pause
+
+Clear-Host
 
 New-Item -Path $VM_FOLDER -ItemType Directory > $null 2>&1
 

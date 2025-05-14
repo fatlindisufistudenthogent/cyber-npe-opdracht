@@ -1,3 +1,9 @@
+<#
+    Write-Host "WARINING:`nDit script maakt gebruik van de VirtualBox command line interface (CLI) 
+    om virtuele machines aan te maken en configureren. Het script download de VDI's vanuit het internet
+    en maakt vervolgens de virtuele machines aan met de juiste instellingen." -ForegroundColor DarkYellow
+#>
+
 $VM_NAAM_1, $VM_NAAM_2 = "Kwetsbare_Ubuntu_VM", "Hacker_Kali_VM"
 
 $RES = $false
@@ -12,22 +18,25 @@ function checkVMsExcists {
         [bool]$res
     )
     if (Test-Path $folder) {
-        Write-Host "De map $folder bestaat al." -foregroundcolor Yellow
+        Write-Host "WARINING: De map $folder bestaat al." -foregroundcolor DarkYellow
         $keuze = Read-Host "`nWilt u de bestaande virtuele machines en gerelateerde settings verwijderen? (j/n)"
         if ($keuze -notin @("j", "J", "ja", "Ja", "JA")) {
+            Clear-Host
             Write-Host "Afsluiten zonder wijzigingen aan te brengen."
             exit 0
         }
         if ($res) {
+            Clear-Host
             Get-Process | Where-Object { 
                 $_.ProcessName -like "*VBox*" -or 
                 $_.ProcessName -like "*VirtualBox*" } | Stop-Process -Force > $null 2>&1
             
         }
         else {
+            Clear-Host
             pkill -f VirtualBox > $null 2>&1
         }
-        Write-Host "Verwijderen van bestaande virtuele machines en settings..."
+        Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [1/2] Verwijderen van bestaande virtuele machines en settings..."
         VBoxManage unregistervm $vm_1 --delete > $null 2>&1
         VBoxManage unregistervm $vm_2 --delete > $null 2>&1
         if ($vbxnet_made -eq $true) {
@@ -37,19 +46,23 @@ function checkVMsExcists {
             -Recurse `
             -Force > $null 2>&1
         if ($res) {
-            Remove-Item -Recurse `
-                -Force $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z") > $null 2>&1
-            Remove-Item -Recurse `
-                -Force $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z") > $null 2>&1
+            Remove-Item -Path $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z")`
+                -Recurse `
+                -Force  > $null 2>&1
+            Remove-Item -Path $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z")`
+                -Recurse `
+                -Force  > $null 2>&1
         }
         else {
-            Remove-Item -Recurse `
-                -Force $(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z") > $null 2>&1
-            Remove-Item -Recurse `
-                -Force $(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z") > $null 2>&1
+            Remove-Item -Path $(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z")`
+                -Recurse `
+                -Force > $null 2>&1
+            Remove-Item -Path $(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z")`
+                -Recurse `
+                -Force > $null 2>&1
         }
         
-        Write-Host "Bestaande virtuele machines en settings zijn verwijderd." -ForegroundColor Green
+        Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [2/2] Bestaande virtuele machines en settings zijn verwijderd."
         exit 0
     
     } 
@@ -93,7 +106,7 @@ if ($RES) {
 
     checkVMsExcists -folder $VM_FOLDER `
         -vm_1 $VM_NAAM_1 `
-        -vm2 $VM_NAAM_2 `
+        -vm_2 $VM_NAAM_2 `
         -vbxnet_made $VBXNET_MADE `
         -name_vbxnet "VirtualBox Host-Only Ethernet Adapter" `
         -res $RES
@@ -131,12 +144,19 @@ else {
 
     checkVMsExcists -folder $VM_FOLDER `
         -vm_1 $VM_NAAM_1 `
-        -vm2 $VM_NAAM_2 `
+        -vm_2 $VM_NAAM_2 `
         -vbxnet_made $VBXNET_MADE `
         -name_vbxnet "vboxnet0" `
         -res $RES
 }
 
+Write-Host "WARINING:`nDit script maakt gebruik van de VirtualBox command line interface (CLI) 
+om virtuele machines aan te maken en configureren. Het script download de VDI's vanuit het internet
+en maakt vervolgens de virtuele machines aan met de juiste instellingen." -ForegroundColor DarkYellow
+
+Pause
+
+Clear-Host
 
 New-Item -Path $VM_FOLDER -ItemType Directory > $null 2>&1
 
@@ -154,19 +174,19 @@ Start-Sleep -Seconds 3
 Clear-Host
 
 if ($RES) {
-    Write-Host "[PROGRESS] [1/5] Downloaden van eerste 7zip map..."
-    Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EcHq8yP1fO5Ms5mIhfwiPkMBOemVCiv94_LffmD_j78WSQ?download=1" `
-        -OutFile $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z") > $null 2>&1
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [1/5] Downloaden van eerste 7zip map..."
+    Start-BitsTransfer -Source "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EcHq8yP1fO5Ms5mIhfwiPkMBOemVCiv94_LffmD_j78WSQ?download=1" `
+        -Destination $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z") > $null 2>&1
 
-    Write-Host "[PROGRESS] [2/5] Downloaden van tweede 7zip map..."
-    Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EbIggjbOMNpFsDRfylf9QGcB2eToYLgYh-yBIOu54u3ueA?download=1" `
-        -OutFile $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z") > $null 2>&1
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [2/5] Downloaden van tweede 7zip map..."
+    Start-BitsTransfer -Source "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EbIggjbOMNpFsDRfylf9QGcB2eToYLgYh-yBIOu54u3ueA?download=1" `
+        -Destination $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z") > $null 2>&1
 }
 else {
-    Write-Host "[PROGRESS] [1/5] Downloaden van eerste 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [1/5] Downloaden van eerste 7zip map..."
     Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EcHq8yP1fO5Ms5mIhfwiPkMBOemVCiv94_LffmD_j78WSQ?download=1" `
         -OutFile $(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z") > $null 2>&1
-    Write-Host "[PROGRESS] [2/5] Downloaden van tweede 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [2/5] Downloaden van tweede 7zip map..."
     Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EbIggjbOMNpFsDRfylf9QGcB2eToYLgYh-yBIOu54u3ueA?download=1" `
         -OutFile $(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z") > $null 2>&1
 }
@@ -177,9 +197,9 @@ if ($RES) {
     if ($PRGM -ne "C:\Program Files\7-Zip") {
         $env:PATH += ";C:\Program Files\7-Zip"
     }
-    Write-Host "[PROGRESS] [3/5] Uitpakken van eerste 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [3/5] Uitpakken van eerste 7zip map..."
     7z x "$(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z")" "-o$VM_FOLDER" > $null 2>&1
-    Write-Host "[PROGRESS] [4/5] Uitpakken van tweede 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [4/5] Uitpakken van tweede 7zip map..."
     7z x "$(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z")" "-o$VM_FOLDER" > $null 2>&1
 }
 else {
@@ -187,14 +207,14 @@ else {
     if ($PRGM -ne "/usr/bin/7z") {
         $env:PATH += ":/usr/bin/7z"
     }
-    Write-Host "[PROGRESS] [3/5] Uitpakken van eerste 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [3/5] Uitpakken van eerste 7zip map..."
     7z x "$(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z")" "-o$VM_FOLDER" > $null 2>&1
-    Write-Host "[PROGRESS] [4/5] Uitpakken van tweede 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [4/5] Uitpakken van tweede 7zip map..."
     7z x "$(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z")" "-o$VM_FOLDER" > $null 2>&1
 }
 
-Write-Host "VDI's geinstalleerd!" -ForegroundColor Green
-Write-Host "[PROGRESS] [5/5] Virtuele machines aanmaken & configureren..."
+Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] VDI's geinstalleerd!"
+Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [5/5] Virtuele machines aanmaken & configureren..."
 
 VBoxManage createvm --name $VM_NAAM_1 `
     --basefolder $VM_FOLDER `
