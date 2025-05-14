@@ -13,8 +13,6 @@ function checkVMsExcists {
         [string]$folder,
         [string]$vm_1,
         [string]$vm_2,
-        [bool]$vbxnet_made,
-        [string]$name_vbxnet,
         [bool]$res
     )
     if (Test-Path $folder) {
@@ -39,11 +37,9 @@ function checkVMsExcists {
         Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [1/2] Verwijderen van bestaande virtuele machines en settings..."
         VBoxManage unregistervm $vm_1 --delete > $null 2>&1
         VBoxManage unregistervm $vm_2 --delete > $null 2>&1
-        if ($vbxnet_made -eq $true) {
-            #VBoxManage hostonlyif remove "$name_vbxnet" > $null 2>&1
-            VBoxManage natnetwork remove --netname "NatNetwerkCyberNPE"
 
-        }
+        VBoxManage natnetwork remove --netname "NatNetwerkCyberNPE"
+
         Remove-Item -Path $folder `
             -Recurse `
             -Force > $null 2>&1
@@ -78,9 +74,6 @@ else {
     $RES = $true
 }
 
-$VBXNET_MADE = $false
-
-
 if ($RES) {
 
     $PRGM = $($env:PATH -split ";" | ForEach-Object { $_ } | Where-Object { $_ -eq "C:\Program Files\Oracle\VirtualBox" } | Select-Object -First 1)
@@ -95,13 +88,9 @@ if ($RES) {
         --port-forward-4 "ssh:tcp:[]:2222:[10.10.10.2]:22" `
         --port-forward-4 "ssh:tcp:[]:2223:[10.10.10.3]:22" > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
 
-    $VBXNET_MADE = $true
-
     checkVMsExcists -folder $VM_FOLDER `
         -vm_1 $VM_NAAM_1 `
         -vm_2 $VM_NAAM_2 `
-        -vbxnet_made $VBXNET_MADE `
-        -name_vbxnet "VirtualBox Host-Only Ethernet Adapter" `
         -res $RES
     
 }
@@ -125,13 +114,9 @@ else {
         --port-forward-4 "ssh:tcp:[]:2222:[10.10.10.2]:22" `
         --port-forward-4 "ssh:tcp:[]:2223:[10.10.10.3]:22"
 
-    $VBXNET_MADE = $true
-
     checkVMsExcists -folder $VM_FOLDER `
         -vm_1 $VM_NAAM_1 `
         -vm_2 $VM_NAAM_2 `
-        -vbxnet_made $VBXNET_MADE `
-        -name_vbxnet "vboxnet0" `
         -res $RES
 }
 
@@ -251,7 +236,7 @@ VBoxManage modifyvm $VM_NAAM_2 --boot1 disk > $null 2>&1
 VBoxManage snapshot $VM_NAAM_1 take "Init fase" --description "Gebruikersnaam: $VM_GEBRUIKERSNAAM_1 Wachtwoord: $VM_PASSWOORD_1" > $null 2>&1
 VBoxManage snapshot $VM_NAAM_2 take "Init fase" --description "Gebruikersnaam: $VM_GEBRUIKERSNAAM_2 Wachtwoord: $VM_PASSWOORD_2" > $null 2>&1
 
-Write-Host "Virtuele machines zijn aangemaakt!" -ForegroundColor Green
+Write-Host "Virtuele machines zijn aangemaakt!" -ForegroundColor DarkGreen
 
 VBoxManage startvm $VM_NAAM_1 > $null 2>&1
 VBoxManage startvm $VM_NAAM_2 > $null 2>&1
