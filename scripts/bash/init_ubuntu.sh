@@ -1,7 +1,9 @@
 #!/usr/bin/bash
 
 sudo apt install openssh-server -y > /dev/null 2>&1
-setxkbmap fr > /dev/null 2>&1
+
+# @ Jamie dit werkt niet
+# setxkbmap fr > /dev/null 2>&1
 
 cat /etc/netplan/01-netcfg.yaml <<EOF
 network:
