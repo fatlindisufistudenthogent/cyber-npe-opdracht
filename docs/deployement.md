@@ -1,26 +1,38 @@
 # Uitrol
 
-## Doel en overzicht: Beschrijft de software of het systeem dat wordt geïmplementeerd. Doelen van de deployment (bijv. nieuwe versie, bugfixes, etc.)
+## Belangrijk om te weten
 
-## Systeemvereisten: Hardware- en softwarevereisten (bijv. besturingssysteem, geheugen, schijfruimte, etc.). Externe afhankelijkheden (bijv. andere software, netwerkinstellingen, databases)
+Voor te installeren van de virtuele machines (vms) hebben we twee scripts voorzien namelijk:
 
-Voor te installeren hebben we twee scripts voorzien
+- init_1.ps1
+- init_2.ps1
 
-1. init.ps1; deze werkt enkel op Windows + voor als u de vdi's al op uw computer heeft staan: u moet zelf vdi's in de desbetreffende pad zetten namelijk:
-   - \user\ [naam_gebruiker]\Downloads\64bit\64bit\ [vdi]) voor eerste vdi
-   - \user\ [naam_gebruiker]\Downloads\64bit (1)\64bit\ [vdi] voor tweede vdi
-2. 2init.ps1; deze werkt zowel op Windows als Linux + dit is een complete automatisatie: u hoeft niets te doen (vdi's worden van uit het internet afgehaald en geplaatst in het correcte pad)
-
-In deze installatie wordt er gebruik gemaakt van
+Voor de virtuele harde schijven (vdi's) hebben het volgende gebruikt:
 
 - Ubuntu 24.10 (64bit) vdi en
 - Kali Linux 2024.3 (64bit) vdi
 
-**Opgelet**: Zorg ervoor dat deze vdi's niet reeds op uw computer staan om conflicten te vermijden.
+Het eerste script `init_1.ps1` werd gemaakt volgends de verwachtingen van de lector. Bij het uitvoeren van deze script krijgt de gebruiker een waarschuwingsbericht om te melden dat de uitvoer helemaal **afhankelijk** is van de gebruiker. Dat wil zeggen dat de vdi's vooraf geinstalleerd
+moet zijn geweest en geplaatst worden in een specifieke locatie namelijk het pad: `C:\Users\<Gebruikersnaam>\Downloads`. Is dit niet gedaan, dan
+krijgt de gebruiker de kans om dit te doen voordat de script kan starten. Omwille van deze lastige beperkingen, heb ik besloten een tweede variant van het script te maken.
 
-Voor alles te deinstalleren voert u het script nog een keer uit in de terminal, er wordt om bevestiging gevraagd.
+Het tweede script `init_2.ps1` werd gemaakt als *uitbreiding* op de eerste script. Bij het uitvoeren van deze script krijgt de gebruiker een waarschuwingsbericht om te melden dat alles geautomatiseerd zal verlopen, de uitvoer zal helemaal **onafhankelijk** zijn van de gebruiker en is `pad locatie onafhankelijk`. Hiervoor heb ik de vdi's vooraf op OneDrive geupload en vanaf daar in PowerShell (PS) een request te doen (het zijn originele vdi's maar vanwege een timer blokkade op de sourceforge site kon PS hier niet goed mee omgaan).
 
-...
+**Opgelet**: Zorg ervoor dat deze vdi's niet reeds op uw computer staan en gebruikt worden door VirtualBox. VirtualBox geeft aan elke vdi een unieke UUID waardoor bij eenzelfde vdi conflicten gebeuren.
+
+*Om deze scripts overzichtelijk te houden is er bewust besloten om foutmeldingen tijdens de installaties te negeren. Indien er fouten gebeuren tijdens de installaties kan de gebruiker gewoonweg het script opnieuw/tweede keer uitvoeren, en dan krijgt de gebruiker de kans om alles te verwijderen/ongedaan maken.*
+
+<!-- @ Jamie @ Joeri
+toon hier de aanval kort of dingen die belangrijk zijn om te weten
+ -->
+
+## Doel en overzicht: Beschrijft de software of het systeem dat wordt geïmplementeerd. Doelen van de deployment (bijv. nieuwe versie, bugfixes, etc.)
+
+<!-- @ Jamie -->
+
+## Systeemvereisten: Hardware- en softwarevereisten (bijv. besturingssysteem, geheugen, schijfruimte, etc.). Externe afhankelijkheden (bijv. andere software, netwerkinstellingen, databases)
+
+<!-- @ Fatlind -->
 
 ## Installatie-instructies: Stap-voor-stap instructies voor het installeren van de software. Waar de bestanden te vinden zijn (bijv. downloadlink, locatie van installatiebestanden). Vereiste rechten voor installatie (bijv. beheerdersrechten)
 
@@ -28,6 +40,8 @@ Voor alles te deinstalleren voert u het script nog een keer uit in de terminal, 
 - Kali Linux 2024.3 (64bit) vdi -> <https://sourceforge.net/projects/osboxes/files/v/vb/25-Kl-l-x/2024.3/64bit.7z/download>
 
 ## Configuratie-instellingen: Configuratie-instellingen die mogelijk moeten worden aangepast om de software goed te laten functioneren. Aanpassingen aan netwerkconfiguraties, databases, services, of beveiligingsinstellingen
+
+<!-- @ Jamie -->
 
 - Ubuntu VM ->
 
@@ -39,23 +53,34 @@ Nu dat de virtuele machines correct geinstalleerd staan, gaan we beginnen met de
 
 START DE UBUNTU VM
 
-1) Het wachtwoord is osboxes.org
-2) (indien je wil kan je de instellingen verander voor het toetsenbord zodat het makkelijker is om de commando's uit te voeren)
+1. Het wachtwoord is osboxes.org
+<!-- @ CLI ! of script
+2. (indien je wil kan je de instellingen verander voor het toetsenbord zodat het makkelijker is om de commando's uit te voeren)
       2.1) ga naar instellingen -> toetsenbord ->
+-->
+
+<!-- @ Deze zouden door init.sh scripts uitgevoerd worden: sudo chmod +x init_ubuntu.sh, sudo chmod +x init_kali.sh; .\init_ubuntu, .\init_kali.sh 
 3) open de terminal en voer de volgende commando's uit
 4) sudo apt install openssh-server -y
 5) sudo systemctl start ssh
 6) sudo systemctl enable ssh
 7) mkdir ghostcat
 8) ip a
+-->
+
+3. Open terminal
+4. sudo chmod +x init_ubuntu.sh
+5. sudo chmod +x init_kali.sh
 
 (kijk welk ip adres de ubuntu vm heeft)
 (De 2 bestanden kopieren naar Ubuntu (gebruik jouw eigen pad en ip van de vms))
 
-10) scp C:/Users/[gebruiker]/cyber-npe-opdracht/scripts/bash/setup_tomcat.sh osboxes@[ip adres van de ubuntu vm]:~/ghostcat/setup_tomcat.sh
-11) scp C:/Users/[gebruiker]/cyber-npe-opdracht/scripts/dockerfile/Dockerfile osboxes@[ip adres van de ubuntu vm]:~/ghostcat/Dockerfile
-12) chmod +x  setup_tomcat.sh
-13) ./setup_tomcat.sh
+**vanaf de host**
+
+10) scp C:\Users\gebruiker\cyber-npe-opdracht\scripts\bash\setup_tomcat.sh osboxes@[ip adres van de ubuntu vm]:~/ghostcat/setup_tomcat.sh
+11) scp C:\Users\[gebruiker]\cyber-npe-opdracht/scripts/dockerfile\Dockerfile osboxes@[ip adres van de ubuntu vm]:~/ghostcat/Dockerfile
+12) chmod +x setup_tomcat.sh
+13) .\setup_tomcat.sh
 
 (het ip adres van de ubuntu vm)
 
