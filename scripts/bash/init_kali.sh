@@ -3,6 +3,7 @@
 sudo apt install openssh-server -y > /dev/null 2>&1
 setxkbmap fr > /dev/null 2>&1
 
+# @ JAmie de exacte bestandsnaam na netplan/ moet je nog vinden en aanpassen hier
 cat /etc/netplan/01-netcfg.yaml <<EOF
 network:
   version: 2

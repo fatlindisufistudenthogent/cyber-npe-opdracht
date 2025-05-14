@@ -1,7 +1,7 @@
 <#
-    Write-Host "WARINING:`nDit script maakt gebruik van de VirtualBox command line interface (CLI) 
+    Dit script maakt gebruik van de VirtualBox command line interface (CLI) 
     om virtuele machines aan te maken en configureren. Het script download de VDI's vanuit het internet
-    en maakt vervolgens de virtuele machines aan met de juiste instellingen."
+    en maakt vervolgens de virtuele machines aan met de juiste instellingen.
 #>
 
 $VM_NAAM_1, $VM_NAAM_2 = "Kwetsbare_Ubuntu_VM", "Hacker_Kali_VM"
