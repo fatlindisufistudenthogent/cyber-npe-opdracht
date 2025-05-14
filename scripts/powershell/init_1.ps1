@@ -84,30 +84,12 @@ if ($RES) {
         $env:PATH += ";C:\Program Files\Oracle\VirtualBox"
     }
 
-    <#
-    $LIST_ONJECTS = $(vboxmanage list hostonlyifs | where-Object { $_ -match "Name:\s+VirtualBox Host-Only Ethernet Adapter\s*" })
-    
-    if ($LIST_ONJECTS.Count -eq "0") {
-        VBoxManage hostonlyif create > $null 2>&1
-        VBoxManage hostonlyif ipconfig "VirtualBox Host-Only Ethernet Adapter" --ip 192.168.56.1 `
-            --netmask 255.255.255.0 > $null 2>&1
-        VBoxManage dhcpserver add --ifname "VirtualBox Host-Only Ethernet Adapter" `
-            --ip 192.168.56.2 `
-            --netmask 255.255.255.0 `
-            --lowerip 192.168.56.3 `
-            --upperip 192.168.56.4 `
-            --enable > $null 2>&1
-    }#>
-
-
-    
-    VBoxManage natnetwork add --netname "NatNetwerkCyberNPE" --network "10.10.10.0/24" --enable > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
-    VBoxManage natnetwork modify --netname "NatNetwerkCyberNPE" --port-forward-4 "ssh:tcp:[]:2222:[10.10.10.2]:22" --port-forward-4 "ssh:tcp:[]:2223:[10.10.10.3]:22" > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
-
-    <#
-    if ($LIST_ONJECTS.Count -eq "1") {
-        $VBXNET_MADE = $true
-    }#>
+    VBoxManage natnetwork add --netname "NatNetwerkCyberNPE" `
+        --network "10.10.10.0/24" `
+        --enable > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
+    VBoxManage natnetwork modify --netname "NatNetwerkCyberNPE" `
+        --port-forward-4 "ssh:tcp:[]:2222:[10.10.10.2]:22" `
+        --port-forward-4 "ssh:tcp:[]:2223:[10.10.10.3]:22" > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
 
     $VBXNET_MADE = $true
 
@@ -131,32 +113,14 @@ else {
         $env:PATH += ":/usr/bin/virtualbox"
     }
 
-    <#
-    $LIST_ONJECTS = $(vboxmanage list hostonlyifs | where-Object { $_ -match "Name:\s+vboxnet[0-9]" })
-
-    if ($LIST_ONJECTS.Count -eq "0") {
-        VBoxManage hostonlyif create > $null 2>&1
-        VBoxManage hostonlyif ipconfig "vboxnet0" --ip 192.168.56.1 `
-            --netmask 255.255.255.0 > $null 2>&1
-        VBoxManage dhcpserver add --ifname "vboxnet0" `
-            --ip 192.168.56.2 `
-            --netmask 255.255.255.0 `
-            --lowerip 192.168.56.3 `
-            --upperip 192.168.56.4 `
-            --enable > $null 2>&1
-    }
-
-    if ($LIST_ONJECTS.Count -eq "1") {
-        $VBXNET_MADE = $true
-    }#>
-
-
-    VBoxManage natnetwork add --netname "NatNetwerkCyberNPE" --network "10.10.10.0/24" --enable > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
-    VBoxManage natnetwork modify --netname "NatNetwerkCyberNPE" --port-forward-4 "ssh:tcp:[]:2222:[10.10.10.2]:22" --port-forward-4 "ssh:tcp:[]:2223:[10.10.10.3]:22" > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
-
+    VBoxManage natnetwork add --netname "NatNetwerkCyberNPE" `
+        --network "10.10.10.0/24" `
+        --enable > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
+    VBoxManage natnetwork modify --netname "NatNetwerkCyberNPE" `
+        --port-forward-4 "ssh:tcp:[]:2222:[10.10.10.2]:22" `
+        --port-forward-4 "ssh:tcp:[]:2223:[10.10.10.3]:22" > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
 
     $VBXNET_MADE = $true
-
 
     checkVMsExcists -folder $VM_FOLDER `
         -vm_1 $VM_NAAM_1 `
@@ -220,53 +184,7 @@ VBoxManage createvm --name $VM_NAAM_2 `
     --ostype Debian_64 `
     --register > $null 2>&1
 
-if ($RES) {
-    <#
-    VBoxManage modifyvm $VM_NAAM_1 --memory 2048 `
-        --cpus 2 `
-        --vram 64 `
-        --nic1 hostonly `
-        --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter" `
-        --nic2 nat > $null 2>&1
-
-    VBoxManage modifyvm $VM_NAAM_2 --memory 2048 `
-        --cpus 2 `
-        --vram 64 `
-        --nic1 hostonly `
-        --hostonlyadapter1 "VirtualBox Host-Only Ethernet Adapter" `
-        --nic2 nat > $null 2>&1
-        #>
-
-
-       VBoxManage modifyvm $VM_NAAM_1 --memory 2048 `
-       --cpus 2 `
-       --vram 64 `
-       --nic1 natnetwork --nat-network1 "NatNetwerkCyberNPE" > $null 2>&1
-
-   VBoxManage modifyvm $VM_NAAM_2 --memory 2048 `
-       --cpus 2 `
-       --vram 64 `
-       --nic1 natnetwork --nat-network1 "NatNetwerkCyberNPE" > $null 2>&1
-}
-else {
-    <#
-    VBoxManage modifyvm $VM_NAAM_1 --memory 2048 `
-        --cpus 2 `
-        --vram 64 `
-        --nic1 hostonly `
-        --hostonlyadapter1 "vboxnet0" `
-        --nic2 nat > $null 2>&1
-
-    VBoxManage modifyvm $VM_NAAM_2 --memory 2048 `
-        --cpus 2 `
-        --vram 64 `
-        --nic1 hostonly `
-        --hostonlyadapter1 "vboxnet0" `
-        --nic2 nat > $null 2>&1
-    #>
-
-
-    VBoxManage modifyvm $VM_NAAM_1 --memory 2048 `
+VBoxManage modifyvm $VM_NAAM_1 --memory 2048 `
     --cpus 2 `
     --vram 64 `
     --nic1 natnetwork --nat-network1 "NatNetwerkCyberNPE" > $null 2>&1
@@ -275,7 +193,6 @@ VBoxManage modifyvm $VM_NAAM_2 --memory 2048 `
     --cpus 2 `
     --vram 64 `
     --nic1 natnetwork --nat-network1 "NatNetwerkCyberNPE" > $null 2>&1
-}
 
 VBoxManage storagectl $VM_NAAM_1 --name "SATA Controller" `
     --add sata `
