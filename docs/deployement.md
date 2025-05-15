@@ -34,7 +34,7 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 
 Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan de opdracht zelf. Hierbij gaan we dus nog een paar commando's uitvoeren.
 
-- 3.1) Start de Ubuntu VM:
+- 3.1) Start de ubuntu vm:
 - 3.2) open terminal
 
 - voer volgende commando's in:
@@ -44,8 +44,9 @@ Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan
 - 3.5) sudo systemctl enable ssh
 - 3.6) mkdir ghostcat
 - 3.7) ip a
-- kijk welk ip adres deze ubuntu VM heeft
-- 
+- kijk welk ip adres deze ubuntu vm heeft
+- 3.8) scp C:/Users/[gebruiker]/cyber-npe-opdracht/scripts/bash/setup_tomcat.sh osboxes@[ip adres van de ubuntu vm]:~/ghostcat/setup_tomcat.sh
+- 3.9) scp C:/Users/[gebruiker]/cyber-npe-opdracht/scripts/dockerfile/Dockerfile osboxes@[ip adres van de ubuntu vm]:~/ghostcat/Dockerfile
 <!-- @ Fatlind -->
 
 ## Installatie-instructies: Stap-voor-stap instructies voor het installeren van de software. Waar de bestanden te vinden zijn (bijv. downloadlink, locatie van installatiebestanden). Vereiste rechten voor installatie (bijv. beheerdersrechten)
