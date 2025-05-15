@@ -14,4 +14,4 @@ iface eth0 inet static
     dns-nameservers 8.8.8.8
 EOF
 
-sudo ifdown enp0s3 && sudo ifup enp0s3 >/dev/null
+sudo ifdown eth0 && sudo ifup eth0 >/dev/null
