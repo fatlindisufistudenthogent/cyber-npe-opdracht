@@ -50,7 +50,7 @@ function checkVMsExcists {
         VBoxManage unregistervm $vm_1 --delete > $null 2>&1
         VBoxManage unregistervm $vm_2 --delete > $null 2>&1
 
-        VBoxManage natnetwork remove --netname "NatNetwerkCyberNPE"
+        VBoxManage natnetwork remove --netname "NatNetwerkCyberNPE" > $null 2>&1
 
         Remove-Item -Path $folder `
             -Recurse `
@@ -101,7 +101,7 @@ else {
         -res $RES
 }
 
-Write-Host "WARINING:`nDit script maakt gebruik van de VirtualBox command line interface (CLI) 
+Write-Host "WARNING:`nDit script maakt gebruik van de VirtualBox command line interface (CLI) 
 om virtuele machines aan te maken en configureren. Het script controleert 
 of de benodigde VDI-bestanden aanwezig zijn in de opgegeven map 
 C:\Users\<Jouw-Gebruikersnaam>\Downloads en maakt vervolgens de virtuele machines 
@@ -149,10 +149,12 @@ VBoxManage natnetwork add --netname "NatNetwerkCyberNPE" `
 --enable > $null 2>&1
 VBoxManage natnetwork modify `
 --netname "NatNetwerkCyberNPE" `
---port-forward-4 "ssh1:tcp:[]:2222:[10.10.10.3]:22" ` > $null 2>&1
+--port-forward-4 "ssh1:tcp:[]:2222:[10.10.10.3]:22" `
+--dhcp off > $null 2>&1
 VBoxManage natnetwork modify `
 --netname "NatNetwerkCyberNPE" `
---port-forward-4 "ssh2:tcp:[]:2223:[10.10.10.4]:22" ` > $null 2>&1
+--port-forward-4 "ssh2:tcp:[]:2223:[10.10.10.4]:22" `
+--dhcp off > $null 2>&1
 
 VBoxManage createvm --name $VM_NAAM_1 `
     --basefolder $VM_FOLDER `

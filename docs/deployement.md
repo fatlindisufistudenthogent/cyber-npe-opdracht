@@ -2,6 +2,8 @@
 
 ## 1) Belangrijk om te weten
 
+### Installatie
+
 Voor te installeren van de virtuele machines (vms) hebben we twee scripts voorzien namelijk:
 
 - init_1.ps1
@@ -9,8 +11,8 @@ Voor te installeren van de virtuele machines (vms) hebben we twee scripts voorzi
 
 Voor de virtuele harde schijven (vdi's) hebben het volgende gebruikt:
 
-- Ubuntu 24.10 (64bit) vdi en
-- Kali Linux 2024.3 (64bit) vdi
+- Ubuntu 24.10 (64bit)
+- Kali Linux 2024.3 (64bit)
 
 Het eerste script `init_1.ps1` werd gemaakt volgends de verwachtingen van de lector. Bij het uitvoeren van deze script krijgt de gebruiker een waarschuwingsbericht om te melden dat de uitvoer helemaal **afhankelijk** is van de gebruiker. Dat wil zeggen dat de vdi's vooraf geinstalleerd
 moet zijn geweest en geplaatst worden in een specifieke locatie namelijk het pad: `C:\Users\<Gebruikersnaam>\Downloads`. Is dit niet gedaan, dan
@@ -21,6 +23,17 @@ Het tweede script `init_2.ps1` werd gemaakt als *uitbreiding* op de eerste scrip
 **Opgelet**: Zorg ervoor dat deze vdi's niet reeds op uw computer staan en gebruikt worden door VirtualBox. VirtualBox geeft aan elke vdi een unieke UUID waardoor bij eenzelfde vdi conflicten gebeuren.
 
 *Om deze scripts overzichtelijk te houden is er bewust besloten om foutmeldingen tijdens de installaties te negeren. Indien er fouten gebeuren tijdens de installaties kan de gebruiker gewoonweg het script opnieuw/tweede keer uitvoeren, en dan krijgt de gebruiker de kans om alles te verwijderen/ongedaan maken.*
+
+ Voor de vms setup is er gebruik gemaakt van een NatNetwerk (NN). De NN biedt een geisoleerde omgeving waarin de vms met elkaar kunnen communiceren aan de hand van ip addressen die op statische wijze worden geconfigureerd. Dit is omdat bij het NN twee port forwarding regels zijn geconfigureerd geweest bij de installatie van het NN en de vms (zie uitleg hierboven). We doen dit omdat we commando's zoals `ssh/scp` willen gebruiken vanaf onze host machine. Dit is handiger dan een sharedfolder of dergelijks. Er zijn twee shell scripts voorzien namelijk:
+
+- `init_ubuntu.sh`
+- `init_kali.sh`
+
+Beide scripts hebben als doel om hun ip addressen te configureren op hun bijhorende interface. Niet alleen dat maar ook ssh en de toetsenbord instelling worden daarmee geinstalleerd & geconfigureerd.
+
+Voor het uitvoeren van de shell scripts moeten die reeds aanwezig zijn op de vms. Er kan gekozen worden om de inhoud handmatig te kopieren en plakken. Vanwege de beperking met VboxManage commando's was het niet mogelijk om deze al pre-installed te krijgen op de vms. Alhoewel er creatief werd nagedacht over een oplossing was het helaas niet gelukt.
+
+*Mededeling: enkel bij ubuntu is het niet gelukt om via de terminal de toetsenbord instelling te wijzigen. Wij vermoeden dat dit niet aan ons ligt maar aan osboxes zelf.*
 
 <!-- @ Jamie @ Joeri
 toon hier de aanval kort of dingen die belangrijk zijn om te weten
@@ -49,10 +62,31 @@ Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan
 - 3.10) ./setup_tomcat.sh
 <!-- @ Fatlind -->
 
+Systeemvereisten om de installaties van de vms succesvol te verlopen:
+
+- Besturingsysteemflexibiliteit: zowel op `Windows als Linux` kan dit gebruikt worden
+- Verbruik per vm:
+      - `RAM:` 2048MB (2GB)
+      - `CPU:` 2cpus
+      - `VRAM:` 64MB
+- Schijfruimte:
+      - `Ubuntu:` ........
+      - `Kali:` .....
+- Software:
+      - `Oracle Virtual Box`
+      - `ssh`
+- Optioneel:
+      - `Ubuntu Osboxes vdi:` 64bit
+      - `Kali Osboxes vdi:` 64bit
+
 ## Installatie-instructies: Stap-voor-stap instructies voor het installeren van de software. Waar de bestanden te vinden zijn (bijv. downloadlink, locatie van installatiebestanden). Vereiste rechten voor installatie (bijv. beheerdersrechten)
 
-- Ubuntu 24.10 (64bit) vdi ->
-- Kali Linux 2024.3 (64bit) vdi -> <https://sourceforge.net/projects/osboxes/files/v/vb/25-Kl-l-x/2024.3/64bit.7z/download>
+Installaties van de benodigde software kan je hieronder telkens vinden:
+
+- Oracle Virtual Box: <https://www.virtualbox.org/wiki/Downloads>
+- SSH: .......... <!-- hoe ?-->
+- Optioneel: Ubuntu 24.10 64bit vdi: <https://www.osboxes.org/ubuntu/>
+- Optioneel: Kali Linux 2024.3 64bit vdi: <https://www.osboxes.org/kali-linux/>
 
 ## Configuratie-instellingen: Configuratie-instellingen die mogelijk moeten worden aangepast om de software goed te laten functioneren. Aanpassingen aan netwerkconfiguraties, databases, services, of beveiligingsinstellingen
 

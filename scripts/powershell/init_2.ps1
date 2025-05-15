@@ -38,7 +38,7 @@ function checkVMsExcists {
         VBoxManage unregistervm $vm_1 --delete > $null 2>&1
         VBoxManage unregistervm $vm_2 --delete > $null 2>&1
 
-        VBoxManage natnetwork remove --netname "NatNetwerkCyberNPE"
+        VBoxManage natnetwork remove --netname "NatNetwerkCyberNPE" > $null 2>&1
 
         Remove-Item -Path $folder `
             -Recurse `
@@ -105,7 +105,7 @@ else {
         -res $RES
 }
 
-Write-Host "WARINING:`nDit script maakt gebruik van de VirtualBox command line interface (CLI) 
+Write-Host "WARNING:`nDit script maakt gebruik van de VirtualBox command line interface (CLI) 
 om virtuele machines aan te maken en configureren. Het script download de VDI's vanuit het internet
 en maakt vervolgens de virtuele machines aan met de juiste instellingen." -ForegroundColor DarkYellow
 
@@ -129,19 +129,19 @@ Start-Sleep -Seconds 3
 Clear-Host
 
 if ($RES) {
-    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [1/5] Downloaden van eerste 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [1/5] Downloaden van eerste 7zip bestand..."
     Start-BitsTransfer -Source "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EcHq8yP1fO5Ms5mIhfwiPkMBOemVCiv94_LffmD_j78WSQ?download=1" `
         -Destination $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z") > $null 2>&1
 
-    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [2/5] Downloaden van tweede 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [2/5] Downloaden van tweede 7zip bestand..."
     Start-BitsTransfer -Source "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EbIggjbOMNpFsDRfylf9QGcB2eToYLgYh-yBIOu54u3ueA?download=1" `
         -Destination $(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z") > $null 2>&1
 }
 else {
-    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [1/5] Downloaden van eerste 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [1/5] Downloaden van eerste 7zip bestand..."
     Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EcHq8yP1fO5Ms5mIhfwiPkMBOemVCiv94_LffmD_j78WSQ?download=1" `
         -OutFile $(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z") > $null 2>&1
-    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [2/5] Downloaden van tweede 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [2/5] Downloaden van tweede 7zip bestand..."
     Invoke-WebRequest -Uri "https://hogent-my.sharepoint.com/:u:/g/personal/fatlind_isufi_student_hogent_be/EbIggjbOMNpFsDRfylf9QGcB2eToYLgYh-yBIOu54u3ueA?download=1" `
         -OutFile $(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z") > $null 2>&1
 }
@@ -152,9 +152,9 @@ if ($RES) {
     if ($PRGM -ne "C:\Program Files\7-Zip") {
         $env:PATH += ";C:\Program Files\7-Zip"
     }
-    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [3/5] Uitpakken van eerste 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [3/5] Uitpakken van eerste 7zip bestand..."
     7z x "$(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel1.7z")" "-o$VM_FOLDER" > $null 2>&1
-    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [4/5] Uitpakken van tweede 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [4/5] Uitpakken van tweede 7zip bestand..."
     7z x "$(Join-Path (Join-Path $env:USERPROFILE "Downloads") "deel2.7z")" "-o$VM_FOLDER" > $null 2>&1
 }
 else {
@@ -162,9 +162,9 @@ else {
     if ($PRGM -ne "/usr/bin/7z") {
         $env:PATH += ":/usr/bin/7z"
     }
-    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [3/5] Uitpakken van eerste 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [3/5] Uitpakken van eerste 7zip bestand..."
     7z x "$(Join-Path (Join-Path $env:HOME "Downloads") "deel1.7z")" "-o$VM_FOLDER" > $null 2>&1
-    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [4/5] Uitpakken van tweede 7zip map..."
+    Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [4/5] Uitpakken van tweede 7zip bestand..."
     7z x "$(Join-Path (Join-Path $env:HOME "Downloads") "deel2.7z")" "-o$VM_FOLDER" > $null 2>&1
 }
 
@@ -178,10 +178,12 @@ VBoxManage natnetwork add --netname "NatNetwerkCyberNPE" `
 
 VBoxManage natnetwork modify `
 --netname "NatNetwerkCyberNPE" `
---port-forward-4 "ssh1:tcp:[]:2222:[10.10.10.3]:22" ` > $null 2>&1
+--port-forward-4 "ssh1:tcp:[]:2222:[10.10.10.3]:22" `
+--dhcp off > $null 2>&1
 VBoxManage natnetwork modify `
 --netname "NatNetwerkCyberNPE" `
---port-forward-4 "ssh2:tcp:[]:2223:[10.10.10.4]:22" ` > $null 2>&1
+--port-forward-4 "ssh2:tcp:[]:2223:[10.10.10.4]:22" `
+--dhcp off > $null 2>&1
 
 VBoxManage createvm --name $VM_NAAM_1 `
     --basefolder $VM_FOLDER `

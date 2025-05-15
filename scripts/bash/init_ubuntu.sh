@@ -2,7 +2,7 @@
 
 sudo apt install openssh-server -y >/dev/null 2>&1
 
-sudo tee /etc/netplan/01-network-manager-all.yaml <<EOF
+sudo tee /etc/netplan/01-network-manager-all.yaml <<EOF >/dev/null 2>&1
 network:
   version: 2
   renderer: NetworkManager
