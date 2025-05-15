@@ -26,8 +26,8 @@ Het tweede script `init_2.ps1` werd gemaakt als *uitbreiding* op de eerste scrip
 
  Voor de vms setup is er gebruik gemaakt van een NatNetwerk (NN). De NN biedt een geisoleerde omgeving waarin de vms met elkaar kunnen communiceren aan de hand van ip addressen die op statische wijze worden geconfigureerd. Dit is omdat bij het NN twee port forwarding regels zijn geconfigureerd geweest bij de installatie van het NN en de vms (zie uitleg hierboven). We doen dit omdat we commando's zoals `ssh/scp` willen gebruiken vanaf onze host machine. Dit is handiger dan een sharedfolder of dergelijks. Er zijn twee shell scripts voorzien namelijk:
 
-- `init_ubuntu.sh`
-- `init_kali.sh`
+- init_ubuntu.sh
+- init_kali.sh
 
 Beide scripts hebben als doel om hun ip addressen te configureren op hun bijhorende interface. Niet alleen dat maar ook ssh en de toetsenbord instelling worden daarmee geinstalleerd & geconfigureerd.
 
@@ -61,8 +61,6 @@ Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan
 - 3.9) sudo ./setup_tomcat.sh
 - controleer nu in een browser of je ook deze Tomcat-container draait op poort 8080 -> http://[ip adres van de ubuntu vm]:8080
 
-
-
 Systeemvereisten om de installaties van de vms succesvol te verlopen:
 
 - Besturingsysteemflexibiliteit: zowel op `Windows als Linux` kan dit gebruikt worden
@@ -79,6 +77,7 @@ Systeemvereisten om de installaties van de vms succesvol te verlopen:
 - Optioneel:
       - `Ubuntu Osboxes vdi:` 64bit
       - `Kali Osboxes vdi:` 64bit
+
 ## 4) Starten van de opdracht (KALI VM)
 
 - 4.1) Start de kali vm:
