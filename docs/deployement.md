@@ -83,6 +83,8 @@ Systeemvereisten om de installaties van de vms succesvol te verlopen:
 
 - 4.1) Start de kali vm:
 - 4.2) open terminal
+- 4.3) sudo systemctl start ssh
+- 4.4) sudo systemctl enable ssh
 
 ## Installatie-instructies: Stap-voor-stap instructies voor het installeren van de software. Waar de bestanden te vinden zijn (bijv. downloadlink, locatie van installatiebestanden). Vereiste rechten voor installatie (bijv. beheerdersrechten)
 
