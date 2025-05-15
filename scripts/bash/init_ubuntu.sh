@@ -1,6 +1,12 @@
 #!/usr/bin/bash
 
-sudo apt install openssh-server -y >/dev/null 2>&1
+# Dit als je niet als root bent ingelogd
+# apt install ssh -y >/dev/null 2>&1
+
+# Dit als je wel als root bent ingelogd, dus via sharedfolder
+apt install ssh -y >/dev/null 2>&1
+sudo systemctl start ssh
+sudo systemctl enable ssh
 
 sudo tee /etc/netplan/01-network-manager-all.yaml <<EOF >/dev/null 2>&1
 network:
@@ -16,3 +22,5 @@ network:
 EOF
 
 sudo netplan apply >/dev/null 2>&1
+
+# ssh osboxes@localhost -p 2222
