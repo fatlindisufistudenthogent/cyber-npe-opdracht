@@ -44,9 +44,9 @@ Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan
 - 3.5) sudo systemctl enable ssh
 - 3.6) mkdir ghostcat
 - 3.7) ip a
-- kijk welk ip adres deze ubuntu vm heeft
-- 3.8) scp C:/Users/[gebruiker]/cyber-npe-opdracht/scripts/bash/setup_tomcat.sh osboxes@[ip adres van de ubuntu vm]:~/ghostcat/setup_tomcat.sh
-- 3.9) scp C:/Users/[gebruiker]/cyber-npe-opdracht/scripts/dockerfile/Dockerfile osboxes@[ip adres van de ubuntu vm]:~/ghostcat/Dockerfile
+- 3.8) cd ghostcat
+- 3.9) chmod +x  setup_tomcat.sh
+- 3.10) ./setup_tomcat.sh
 <!-- @ Fatlind -->
 
 ## Installatie-instructies: Stap-voor-stap instructies voor het installeren van de software. Waar de bestanden te vinden zijn (bijv. downloadlink, locatie van installatiebestanden). Vereiste rechten voor installatie (bijv. beheerdersrechten)
