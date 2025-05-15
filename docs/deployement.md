@@ -34,15 +34,15 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 
 Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan de opdracht zelf. Hierbij gaan we dus nog een paar commando's uitvoeren.
 
-3.1) Start de Ubuntu VM:
-3.2) open terminal
+- 3.1) Start de Ubuntu VM:
+- 3.2) open terminal
 
-voer volgende commando's in:
+- voer volgende commando's in:
 
-3.3) sudo apt install openssh-server -y
-3.4) sudo systemctl start ssh
-3.5) sudo systemctl enable ssh
-3.6) mkdir ghostcat
+- 3.3) sudo apt install openssh-server -y
+- 3.4) sudo systemctl start ssh
+- 3.5) sudo systemctl enable ssh
+- 3.6) mkdir ghostcat
 <!-- @ Fatlind -->
 
 ## Installatie-instructies: Stap-voor-stap instructies voor het installeren van de software. Waar de bestanden te vinden zijn (bijv. downloadlink, locatie van installatiebestanden). Vereiste rechten voor installatie (bijv. beheerdersrechten)
