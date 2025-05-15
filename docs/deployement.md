@@ -43,6 +43,9 @@ Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan
 - 3.4) sudo systemctl start ssh
 - 3.5) sudo systemctl enable ssh
 - 3.6) mkdir ghostcat
+- 3.7) ip a
+- kijk welk ip adres deze ubuntu VM heeft
+- 
 <!-- @ Fatlind -->
 
 ## Installatie-instructies: Stap-voor-stap instructies voor het installeren van de software. Waar de bestanden te vinden zijn (bijv. downloadlink, locatie van installatiebestanden). Vereiste rechten voor installatie (bijv. beheerdersrechten)
