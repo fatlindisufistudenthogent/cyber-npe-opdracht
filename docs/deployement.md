@@ -64,19 +64,19 @@ Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan
 Systeemvereisten om de installaties van de vms succesvol te verlopen:
 
 - Besturingsysteemflexibiliteit: zowel op `Windows als Linux` kan dit gebruikt worden
-- Verbruik per vm:
-      - `RAM:` 2048MB (2GB)
-      - `CPU:` 2cpus
-      - `VRAM:` 64MB
-- Schijfruimte:
-      - `Ubuntu:` ........
-      - `Kali:` .....
-- Software:
-      - `Oracle Virtual Box`
-      - `ssh`
-- Optioneel:
-      - `Ubuntu Osboxes vdi:` 64bit
-      - `Kali Osboxes vdi:` 64bit
+- Verbruik per vm:  
+      - `RAM:` 2048MB (2GB)  
+      - `CPU:` 2cpus  
+      - `VRAM:` 64MB  
+- Schijfruimte:  
+      - `Ubuntu:` ........  
+      - `Kali:` .....  
+- Software:  
+      - `Oracle Virtual Box`  
+      - `ssh`  
+- Optioneel:  
+      - `Ubuntu Osboxes vdi:` 64bit  
+      - `Kali Osboxes vdi:` 64bit  
 
 ## 4) Starten van de opdracht (KALI VM)
 
