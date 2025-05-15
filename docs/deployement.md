@@ -43,7 +43,7 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 
 <!-- @ Jamie -->
 
-## 3) Starten van de opdracht
+## 3) Starten van de opdracht (UBUNTU VM)
 
 Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan de opdracht zelf. Hierbij gaan we dus nog een paar commando's uitvoeren.
 
@@ -60,7 +60,8 @@ Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan
 - 3.8) chmod +x setup_tomcat.sh
 - 3.9) sudo ./setup_tomcat.sh
 - controleer nu in een browser of je ook deze Tomcat-container draait op poort 8080 -> http://[ip adres van de ubuntu vm]:8080
-<!-- @ Fatlind -->
+
+
 
 Systeemvereisten om de installaties van de vms succesvol te verlopen:
 
