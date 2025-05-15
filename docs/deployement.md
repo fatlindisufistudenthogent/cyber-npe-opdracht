@@ -87,6 +87,7 @@ Systeemvereisten om de installaties van de vms succesvol te verlopen:
 - 4.4) sudo systemctl enable ssh
 - 4.5) cd Downloads
 - 4.6) chmod +x exploit_ghostcat.py
+- 4.7) nmap [ip adres van de ubuntu vm] -p 8009
 
 ## Installatie-instructies: Stap-voor-stap instructies voor het installeren van de software. Waar de bestanden te vinden zijn (bijv. downloadlink, locatie van installatiebestanden). Vereiste rechten voor installatie (bijv. beheerdersrechten)
 
