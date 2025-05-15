@@ -77,13 +77,6 @@ if ($RES) {
         $env:PATH += ";C:\Program Files\Oracle\VirtualBox"
     }
 
-    VBoxManage natnetwork add --netname "NatNetwerkCyberNPE" `
-        --network "10.10.10.0/24" `
-        --enable > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
-    VBoxManage natnetwork modify --netname "NatNetwerkCyberNPE" `
-        --port-forward-4 "ssh:tcp:[]:2222:[10.10.10.2]:22" `
-        --port-forward-4 "ssh:tcp:[]:2223:[10.10.10.3]:22" > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
-
     checkVMsExcists -folder $VM_FOLDER `
         -vm_1 $VM_NAAM_1 `
         -vm_2 $VM_NAAM_2 `
@@ -101,13 +94,6 @@ else {
     if ($PRGM -ne "/usr/bin/virtualbox") {
         $env:PATH += ":/usr/bin/virtualbox"
     }
-
-    VBoxManage natnetwork add --netname "NatNetwerkCyberNPE" `
-        --network "10.10.10.0/24" `
-        --enable > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
-    VBoxManage natnetwork modify --netname "NatNetwerkCyberNPE" `
-        --port-forward-4 "ssh:tcp:[]:2222:[10.10.10.2]:22" `
-        --port-forward-4 "ssh:tcp:[]:2223:[10.10.10.3]:22" > $null 2>&1 # Onderdruk foutmelding, omdat bij verwijderen bestaat het al error
 
     checkVMsExcists -folder $VM_FOLDER `
         -vm_1 $VM_NAAM_1 `
@@ -156,6 +142,17 @@ Clear-Host
 
 Write-Host "VDI's geinstalleerd!" -ForegroundColor DarkGreen
 Write-Host "[$(Get-Date -Format "dd-MM-yyyy HH:mm:ss")] [1/1] Virtuele machines aanmaken & configureren..."
+
+
+VBoxManage natnetwork add --netname "NatNetwerkCyberNPE" `
+--network "10.10.10.0/24" `
+--enable > $null 2>&1
+VBoxManage natnetwork modify `
+--netname "NatNetwerkCyberNPE" `
+--port-forward-4 "ssh1:tcp:[]:2222:[10.10.10.3]:22" ` > $null 2>&1
+VBoxManage natnetwork modify `
+--netname "NatNetwerkCyberNPE" `
+--port-forward-4 "ssh2:tcp:[]:2223:[10.10.10.4]:22" ` > $null 2>&1
 
 VBoxManage createvm --name $VM_NAAM_1 `
     --basefolder $VM_FOLDER `
