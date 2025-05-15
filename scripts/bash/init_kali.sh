@@ -1,19 +1,15 @@
 #!/usr/bin/bash
 
-sudo apt install openssh-server -y > /dev/null 2>&1
-setxkbmap fr > /dev/null 2>&1
+sudo apt install openssh-server -y >/dev/null 2>&1
 
-# @ JAmie de exacte bestandsnaam na netplan/ moet je nog vinden en aanpassen hier
-cat /etc/netplan/01-netcfg.yaml <<EOF
-network:
-  version: 2
-  renderer: networkd
-  ethernets:
-    enp0s3:
-      dhcp4: no
-      addresses:
-        - 10.10.10.3/24
-      gateway4: 10.10.10.1
-      nameservers:
-        addresses: [8.8.8.8]
+setxkbmap fr >/dev/null 2>&1
+
+# Lees de tijdelijke bestand, schrijft stdout op scherm en append aan het bestand interfaces; /dev/null zorgt ervoor dat er geen stdout op het scherm toont
+sudo tee -a /etc/network/interfaces <<EOF >/dev/null
+auto eth0
+iface eth0 inet static
+    address 10.10.10.3
+    netmask 255.255.255.0
+    gateway 10.10.10.1
+    dns-nameservers 8.8.8.8
 EOF

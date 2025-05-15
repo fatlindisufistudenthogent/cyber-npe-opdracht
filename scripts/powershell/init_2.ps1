@@ -108,11 +108,11 @@ else {
 
     VBoxManage natnetwork add --netname "NatNetwerkCyberNPE" `
         --network "10.10.10.0/24" `
-        --enable
+        --enable > $null 2>&1
     VBoxManage natnetwork modify `
         --netname "NatNetwerkCyberNPE" `
         --port-forward-4 "ssh:tcp:[]:2222:[10.10.10.2]:22" `
-        --port-forward-4 "ssh:tcp:[]:2223:[10.10.10.3]:22"
+        --port-forward-4 "ssh:tcp:[]:2223:[10.10.10.3]:22" > $null 2>&1
 
     checkVMsExcists -folder $VM_FOLDER `
         -vm_1 $VM_NAAM_1 `

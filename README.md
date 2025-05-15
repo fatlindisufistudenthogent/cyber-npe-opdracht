@@ -20,7 +20,7 @@ CVE (common vulnerability exposure):
   - **Reproduceerbaarheid:** De docent moet door aan de hand van de scripts uit te voeren de omgevingen kunnen reproduceren. De VDI's downloaden zij zelf en moet je niet meeleveren.
 - `Bij het indienen`:
   - **2 scripts** in een zip mapje
-  - Er moet een **[deployment handleiding (in pdf formaat)](#extra-uitleg)** voorzien worden. In een zip mapje
+  - Er moet een **deployment handleiding (in pdf formaat)** voorzien worden. In een zip mapje
   - Een korte **samenvatting/cheatsheet (in pdf formaat)** van uit te voeren stappen om de aanval succesvoluit te voeren (de docent volgt deze stap voor stap). In een zip mapje
   - **een korte demo-video via Panopto met Webcam (waarin iedereen aanbod komt)**. Maximale duur is 10 minuten:
     - 3/4 minuten voor het automatisatie deel
