@@ -79,6 +79,10 @@ Systeemvereisten om de installaties van de vms succesvol te verlopen:
 - Optioneel:
       - `Ubuntu Osboxes vdi:` 64bit
       - `Kali Osboxes vdi:` 64bit
+## 4) Starten van de opdracht (KALI VM)
+
+- 4.1) Start de kali vm:
+- 4.2) open terminal
 
 ## Installatie-instructies: Stap-voor-stap instructies voor het installeren van de software. Waar de bestanden te vinden zijn (bijv. downloadlink, locatie van installatiebestanden). Vereiste rechten voor installatie (bijv. beheerdersrechten)
 
