@@ -59,7 +59,8 @@ Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan
 - 3.7) ip a
 - 3.8) cd ghostcat
 - 3.9) chmod +x  setup_tomcat.sh
-- 3.10) ./setup_tomcat.sh
+- 3.10) sudo ./setup_tomcat.sh
+controleer nu in een browser of je ook deze Tomcat-container draait op poort 8080 -> http://[ip adres van de ubuntu vm]:8080
 <!-- @ Fatlind -->
 
 Systeemvereisten om de installaties van de vms succesvol te verlopen:
