@@ -13,3 +13,5 @@ iface eth0 inet static
     gateway 10.10.10.1
     dns-nameservers 8.8.8.8
 EOF
+
+sudo ifdown enp0s3 && sudo ifup enp0s3 >/dev/null
