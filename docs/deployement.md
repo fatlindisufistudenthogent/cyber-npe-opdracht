@@ -42,11 +42,12 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 ## 2) Virtuele omgeving vervolledigen (netwerk adapters)
 
 - zorg dat het init_kali.sh bestand is gedownload op je host
+- zorg dat het exploit_ghostcat.py bestand is gedownload op je host
 - zorg dat het init_ubuntu.sh bestand is gedownload op je host
 - zorg dat het setup_tomcat.sh bestand is gedownload op je host
 - zorg dat het Dockerfile.txt bestand is gedownload op je host
 
-- geef in virtualbox de kali vm een gedeelde map waarin dit init_kali.sh bestand in zit
+- geef in virtualbox de kali vm een gedeelde map waarin dit init_kali.sh en exploit_ghostcat.py bestand in zit
 
 - geef in virtualbox de ubuntu vm een gedeelde map waarin dit init_ubuntu.sh en setup_tomcat.sh en Dockerfile.txt in zit
 
