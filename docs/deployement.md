@@ -57,8 +57,8 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 - 2.3) sudo cp /media/sf_ubuntu/init_ubuntu.sh ~/Desktop/
 - 2.4) sudo cp /media/sf_ubuntu/setup_tomcat.sh ~/Desktop/
 - 2.5) sudo cp /media/sf_ubuntu/Dockerfile.txt ~/Desktop/
- 
-- 2.5) chmod +x init_ubuntu.sh
+- 2.6) cd Desktop
+- 2.7) sudo chmod +x init_ubuntu.sh
 - 2.6) ./init_ubuntu.sh
 - Dit is wat de uitvoer zou moeten zijn:
 - ![image](https://github.com/user-attachments/assets/5df459aa-bf35-4787-b439-5265ebb989ae)
