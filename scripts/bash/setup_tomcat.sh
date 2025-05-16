@@ -18,10 +18,13 @@ fi
 echo "Gedetecteerd IP-adres: $UBUNTU_IP"
 
 # Navigeer naar de scriptdirectory
-cd "$WORKDIR" || { echo "Fout: Kan niet navigeren naar $WORKDIR"; exit 1; }
+cd "$WORKDIR" || {
+    echo "Fout: Kan niet navigeren naar $WORKDIR"
+    exit 1
+}
 
 # Controleer of Docker is geïnstalleerd
-if ! command -v docker &> /dev/null; then
+if ! command -v docker &>/dev/null; then
     echo "Docker is niet geïnstalleerd. Installeren..."
     apt-get update
     apt-get install -y docker.io
@@ -35,7 +38,7 @@ fi
 if ! groups "$CURRENT_USER" | grep -q docker; then
     echo "Toevoegen van $CURRENT_USER aan docker-groep..."
     usermod -aG docker "$CURRENT_USER"
-    newgrp docker << EOF
+    newgrp docker <<EOF
     echo "Gebruiker toegevoegd aan docker-groep."
 EOF
 fi
@@ -71,5 +74,4 @@ else
     exit 1
 fi
 
-
-echo "Setup voltooid op $(date). Container: $CONTAINER_NAME, IP: $UBUNTU_IP, Poorten: $TOMCAT_PORT_HTTP, $TOMCAT_PORT_AJP" >> setup_log.txt
+echo "Setup voltooid op $(date). Container: $CONTAINER_NAME, IP: $UBUNTU_IP, Poorten: $TOMCAT_PORT_HTTP, $TOMCAT_PORT_AJP" >>setup_log.txt
