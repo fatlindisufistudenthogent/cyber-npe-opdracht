@@ -50,6 +50,11 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 - 2.6) ./init_ubuntu.sh
 - Dit is wat de uitvoer zou moeten zijn:
 - ![image](https://github.com/user-attachments/assets/5df459aa-bf35-4787-b439-5265ebb989ae)
+- voer volgende commando's uit om dit te controleren:
+- 2.7) ip -br a
+- Dit is wat de uitvoer zou moeten zijn:
+- ![image](https://github.com/user-attachments/assets/66d4f478-f46a-499b-9666-0baf2522c86b)
+
 
 <!-- @ Jamie -->
 
