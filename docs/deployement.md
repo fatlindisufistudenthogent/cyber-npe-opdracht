@@ -78,35 +78,18 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan de opdracht zelf. Hierbij gaan we dus nog een paar commando's uitvoeren.
 
 - 3.1) Start de ubuntu vm (indien deze nog niet aan staat):
-- 3.2) open terminal
+- 3.2) zorg dat het setup_tomcat.sh bestand op de ubuntu vm staat
+- 3.3) open terminal
 
 - voer volgende commando's in:
 
-- 3.3) sudo apt install openssh-server -y
-- 3.4) sudo systemctl start ssh
-- 3.5) sudo systemctl enable ssh
-- 3.6) mkdir ghostcat
-- 3.7) cd ghostcat
+- 3.4) sudo apt install openssh-server -y
+- 3.5) sudo systemctl start ssh
+- 3.6) sudo systemctl enable ssh
+- 3.7) ga naar het pad waar dit setup_tomcat.sh bestand staat (bv Downloads -> cd Downloads)
 - 3.8) chmod +x setup_tomcat.sh
 - 3.9) sudo ./setup_tomcat.sh
-- controleer nu in een browser of je ook deze Tomcat-container draait op poort 8080 -> http://[ip adres van de ubuntu vm]:8080
-
-Systeemvereisten om de installaties van de vms succesvol te verlopen:
-
-- Besturingsysteemflexibiliteit: zowel op `Windows als Linux` kan dit gebruikt worden
-- Verbruik per vm:  
-      - `RAM:` 2048MB (2GB)  
-      - `CPU:` 2cpus  
-      - `VRAM:` 64MB  
-- Schijfruimte:  
-      - `Ubuntu:` ........  
-      - `Kali:` .....  
-- Software:  
-      - `Oracle Virtual Box`  
-      - `ssh`  
-- Optioneel:  
-      - `Ubuntu Osboxes vdi:` 64bit  
-      - `Kali Osboxes vdi:` 64bit  
+- controleer nu in een browser of je ook deze Tomcat-container draait op poort 8080 -> http://10.10.10.4:8080
 
 ## 4) Starten van de opdracht (KALI VM)
 
@@ -233,3 +216,22 @@ in kali:
 ## Versiebeheer: Versie-informatie van de geïmplementeerde software. Veranderingen of nieuwe functies in de versie die wordt gedeployed
 
 ## Schaling en onderhoud: Hoe het systeem kan worden opgeschaald of uitgebreid. Instructies voor regelmatige onderhoudstaken of updates na de deployment
+
+## rest
+Systeemvereisten om de installaties van de vms succesvol te verlopen:
+
+- Besturingsysteemflexibiliteit: zowel op `Windows als Linux` kan dit gebruikt worden
+- Verbruik per vm:  
+      - `RAM:` 2048MB (2GB)  
+      - `CPU:` 2cpus  
+      - `VRAM:` 64MB  
+- Schijfruimte:  
+      - `Ubuntu:` ........  
+      - `Kali:` .....  
+- Software:  
+      - `Oracle Virtual Box`  
+      - `ssh`  
+- Optioneel:  
+      - `Ubuntu Osboxes vdi:` 64bit  
+      - `Kali Osboxes vdi:` 64bit  
+
