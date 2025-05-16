@@ -67,11 +67,12 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 - Dit is wat de uitvoer zou moeten zijn:
 - ![image](https://github.com/user-attachments/assets/66d4f478-f46a-499b-9666-0baf2522c86b)
 - 2.8) start nu de kali vm (laat de ubuntu vm aan)
-- 2.9) zorg dat het init_kali.sh bestand op de kali vm staat
 - 2.10) open terminal in de kali vm
-- 2.11) ga naar het pad waar dit init_kali.sh bestand staat (bv Downloads -> cd Downloads)
 - voer volgende commando's uit in kali vm:
-- 2.12) chmod +x init_kali.sh
+- sudo cp /media/sf_kali/init_kali.sh ~/Desktop/
+- cd Desktop
+- 2.12) sudo chmod +x init_kali.sh
+- 
 - 2.13) ./init_kali.sh
 - 2.14) ip -br a
 - Dit is wat de uitvoer zou moeten zijn:
