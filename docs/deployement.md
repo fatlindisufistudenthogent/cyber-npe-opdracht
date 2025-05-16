@@ -50,56 +50,40 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 
 - geef in virtualbox de ubuntu vm een gedeelde map waarin dit init_ubuntu.sh en setup_tomcat.sh en Dockerfile.txt in zit
 
-- 2.1) start de ubuntu vm
-- 2.2) open terminal in de ubuntu vm
+- start de ubuntu vm
+- open terminal in de ubuntu vm
 - voer volgende commando's uit in ubuntu vm:
 
-- 2.3) sudo cp /media/sf_ubuntu/init_ubuntu.sh ~/Desktop/
-- 2.4) sudo cp /media/sf_ubuntu/setup_tomcat.sh ~/Desktop/
-- 2.5) sudo cp /media/sf_ubuntu/Dockerfile.txt ~/Desktop/
-- 2.6) cd Desktop
-- sudo apt install openssh-server -y
-- sudo systemctl start ssh
-- sudo systemctl enable ssh
-- 2.7) sudo chmod +x init_ubuntu.sh
-- 2.6) sudo ./init_ubuntu.sh
-- 2.7) ip -br a
+- 2.1) sudo cp /media/sf_ubuntu/init_ubuntu.sh ~/Desktop/
+- 2.2) sudo cp /media/sf_ubuntu/setup_tomcat.sh ~/Desktop/
+- 2.3) sudo cp /media/sf_ubuntu/Dockerfile.txt ~/Desktop/
+- 2.4) cd Desktop
+- 2.5) sudo apt install openssh-server -y
+- 2.6) sudo systemctl start ssh
+- 2.7) sudo systemctl enable ssh
+- 2.8) sudo chmod +x init_ubuntu.sh
+- 2.9) sudo ./init_ubuntu.sh
+- 2.10) ip -br a
 - Dit is wat de uitvoer zou moeten zijn:
 - ![image](https://github.com/user-attachments/assets/66d4f478-f46a-499b-9666-0baf2522c86b)
-- 2.8) start nu de kali vm (laat de ubuntu vm aan)
-- 2.10) open terminal in de kali vm
+- start nu de kali vm (laat de ubuntu vm aan)
+- open terminal in de kali vm
 - voer volgende commando's uit in kali vm:
-- sudo cp /media/sf_kali/init_kali.sh ~/Desktop/
-- cd Desktop
-- 2.12) sudo chmod +x init_kali.sh
-- 2.13) sudo ./init_kali.sh
-- 2.14) ip -br a
+- 2.11) sudo cp /media/sf_kali/init_kali.sh ~/Desktop/
+- 2.12) cd Desktop
+- 2.13) sudo chmod +x init_kali.sh
+- 2.14) sudo ./init_kali.sh
+- 2.15) ip -br a
 - Dit is wat de uitvoer zou moeten zijn:
 - ![image](https://github.com/user-attachments/assets/d9b2301a-cd19-44c2-866a-a70e949028c7)
 - in kali vm voer volgend commando uit om te controleren of je kan pingen naar ubuntu vm:
-- 2.15) ping 10.10.10.4
+- 2.16) ping 10.10.10.4
 - in ubuntu vm voer volgend commando uit om te controleren of je kan pingen naar kali vm:
-- 2.15) ping 10.10.10.3
+- 2.17) ping 10.10.10.3
 - controleer nu ook of beide vm's toegang hebben tot het internet
-
-<!-- @ Jamie -->
-
-## 3) Opzetten van de kwetsbaarheid (Ubuntu VM)
-
-Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan de opdracht zelf. Hierbij gaan we dus nog een paar commando's uitvoeren.
-
-- 3.1) Start de ubuntu vm (indien deze nog niet aan staat):
-- 3.2) zorg dat het setup_tomcat.sh bestand op de ubuntu vm staat
-- 3.3) open terminal
-
-- voer volgende commando's in:
-
-- 3.4) sudo apt install openssh-server -y
-- 3.5) sudo systemctl start ssh
-- 3.6) sudo systemctl enable ssh
-- 3.7) ga naar het pad waar dit setup_tomcat.sh bestand staat (bv Downloads -> cd Downloads)
-- 3.8) chmod +x setup_tomcat.sh
-- 3.9) sudo ./setup_tomcat.sh
+- ga nu terug naar de ubuntu vm en voer de volgende commando's uit
+- 2.18) sudochmod +x setup_tomcat.sh
+- 2.19) sudo ./setup_tomcat.sh
 - controleer nu in een browser of je ook deze Tomcat-container draait op poort 8080 -> http://10.10.10.4:8080
 
 ## Ondersteuning en foutoplossing: Veelvoorkomende problemen en oplossingen. Contactinformatie voor technische ondersteuning
