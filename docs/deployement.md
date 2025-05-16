@@ -11,8 +11,8 @@ Voor te installeren van de virtuele machines (vms) hebben we twee scripts voorzi
 
 Voor de virtuele harde schijven (vdi's) hebben het volgende gebruikt:
 
-- Ubuntu 24.10 (64bit)
-- Kali Linux 2024.3 (64bit)
+- Ubuntu 24.10 (64bit) -> <https://www.osboxes.org/ubuntu/>
+- Kali Linux 2024.3 (64bit) -> <https://www.osboxes.org/kali-linux/>
 
 Het eerste script `init_1.ps1` werd gemaakt volgends de verwachtingen van de lector. Bij het uitvoeren van deze script krijgt de gebruiker een waarschuwingsbericht om te melden dat de uitvoer helemaal **afhankelijk** is van de gebruiker. Dat wil zeggen dat de vdi's vooraf geinstalleerd
 moet zijn geweest en geplaatst worden in een specifieke locatie namelijk het pad: `C:\Users\<Gebruikersnaam>\Downloads`. Is dit niet gedaan, dan
