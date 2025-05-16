@@ -8,6 +8,8 @@ In deze handleiding illustreren we het opzetten en aanvallen van een Apache-serv
 
 ## 🧠 Belangrijk om te weten
 
+De scripts werken zowel voor Windows als Linux gebruikers.
+
 Voor te installeren van de virtuele machines (vms) hebben we twee scripts voorzien namelijk:
 
 - init_1.ps1
@@ -19,8 +21,7 @@ Voor de virtuele harde schijven (vdi's) hebben het volgende gebruikt:
 - Kali Linux 2024.3
 
 Het eerste script **init_1.ps1** werd gemaakt volgends de verwachtingen van de lector. Bij het uitvoeren van deze script krijgt de gebruiker een waarschuwingsbericht om te melden dat de uitvoer helemaal **afhankelijk** is van de gebruiker. Dat wil zeggen dat de vdi's vooraf geinstalleerd
-moet zijn geweest en geplaatst worden in een specifieke locatie namelijk het pad: `C:\Users\<Gebruikersnaam>\Downloads`. Is dit niet gedaan, dan
-krijgt de gebruiker de kans om dit te doen voordat de script kan starten. Omwille van deze lastige beperkingen, heb ik besloten een tweede variant van het script te maken.
+moet zijn geweest en geplaatst worden in een specifieke locatie namelijk het pad: `C:\Users\<Gebruikersnaam>\Downloads` voor Windows of `/home/<gebruikersnaam>/Downloads` voor Linux. Is dit niet gedaan, dan krijgt de gebruiker de kans om dit te doen voordat de script kan starten. Omwille van deze lastige beperkingen, heb ik besloten een tweede variant van het script te maken.
 
 Het tweede script **init_2.ps1** werd gemaakt als *uitbreiding* op de eerste script. Bij het uitvoeren van deze script krijgt de gebruiker een waarschuwingsbericht om te melden dat alles geautomatiseerd zal verlopen, de uitvoer zal helemaal **onafhankelijk** zijn van de gebruiker en is `pad locatie onafhankelijk`. Hiervoor heb ik de vdi's vooraf op OneDrive geupload en vanaf daar in PowerShell (PS) een request te doen (het zijn originele vdi's maar vanwege een timer blokkade op de sourceforge site kon PS hier niet goed mee omgaan).
 
@@ -45,7 +46,7 @@ Voor het uitvoeren van de shell scripts moeten die reeds aanwezig zijn op de vms
 
 ### Hardwarevereisten
 
-- Besturingsysteemflexibiliteit: zowel op `Windows als Linux` kan dit gebruikt worden
+- Besturingsysteemflexibiliteit: `Windows/Linux`
 - Verbruik per vm:  
       - RAM: 2048MB (2GB)  
       - CPU: 2cpus  

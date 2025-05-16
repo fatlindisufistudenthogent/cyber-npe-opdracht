@@ -7,7 +7,10 @@ Volg de stappen hieronder om de aanval succesvol uit te voeren
 Open een terminal vanaf de host om het bestand over te zetten naar de kali vm
 
 ```bash
+# Voor windows gebruiker
 scp -P 2222  "C:/Users/<Gebruikersnaam>/<Het pad waar je de folder hebt opgeslagen>/cyber-npe-opdracht/scripts/python/exploit_ghostcat.py" osboxes@localhost:~/Desktop
+# Voor linux gebruiker
+scp -P 2222  "/home/<gebruikersnaam>/<Het pad waar je de folder hebt opgeslagen>/cyber-npe-opdracht/scripts/python/exploit_ghostcat.py" osboxes@localhost:~/Desktop
 ```
 
 ## Kali
