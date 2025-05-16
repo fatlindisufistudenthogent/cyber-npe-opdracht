@@ -45,9 +45,9 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 - 2.2) zorg dat het init_ubuntu.sh bestand op de ubuntu vm staat
 - 2.3) open terminal in de ubuntu vm
 - 2.4) ga naar het pad waar dit init_ubuntu.sh bestand staat (bv Downloads -> cd Downloads)
-- 
+  
 - voer volgende commando's uit in ubuntu vm:
-- 
+  
 - 2.5) chmod +x init_ubuntu.sh
 - 2.6) ./init_ubuntu.sh
 - Dit is wat de uitvoer zou moeten zijn:
