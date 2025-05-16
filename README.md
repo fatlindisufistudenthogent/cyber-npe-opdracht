@@ -1,8 +1,8 @@
-# cyber-npe-opdracht
+# Cyber-npe-opdracht
 
-## algemeen
+## Algemeen
 
-`deadline 18/05/23 - 18:00`
+`Deadline 18/05/23 - 18:00`
 CVE (common vulnerability exposure):
 
 - `CVE-2020-1938`. Netwerkdienst die we aanvallen is Apache Tomcat server.
@@ -26,4 +26,3 @@ CVE (common vulnerability exposure):
     - 3/4 minuten voor het automatisatie deel
     - 6/7 minuten voor het aanvallende deel
     - in commentaar geef je de link naar de Panopto video
-    
