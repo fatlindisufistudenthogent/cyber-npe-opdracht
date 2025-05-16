@@ -58,6 +58,9 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 - 2.4) sudo cp /media/sf_ubuntu/setup_tomcat.sh ~/Desktop/
 - 2.5) sudo cp /media/sf_ubuntu/Dockerfile.txt ~/Desktop/
 - 2.6) cd Desktop
+- sudo apt install openssh-server -y
+- sudo systemctl start ssh
+- sudo systemctl enable ssh
 - 2.7) sudo chmod +x init_ubuntu.sh
 - 2.6) ./init_ubuntu.sh
 - Dit is wat de uitvoer zou moeten zijn:
