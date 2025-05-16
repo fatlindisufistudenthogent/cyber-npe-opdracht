@@ -45,7 +45,7 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 - 2.2) zorg dat het init_ubuntu.sh bestand op de ubuntu vm staat
 - 2.3) open terminal in de ubuntu vm
 - 2.4) ga naar het pad waar dit init_ubuntu.sh bestand staat (bv Downloads -> cd Downloads)
-- voer volgende commando's uit:
+- voer volgende commando's uit in ubuntu vm:
 - 2.5) chmod +x init_ubuntu.sh
 - 2.6) ./init_ubuntu.sh
 - Dit is wat de uitvoer zou moeten zijn:
@@ -54,7 +54,22 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 - 2.7) ip -br a
 - Dit is wat de uitvoer zou moeten zijn:
 - ![image](https://github.com/user-attachments/assets/66d4f478-f46a-499b-9666-0baf2522c86b)
-
+- 2.8) start nu de kali vm (laat de ubuntu vm aan)
+- 2.9) zorg dat het init_kali.sh bestand op de kali vm staat
+- 2.10) open terminal in de kali vm
+- 2.11) ga naar het pad waar dit init_kali.sh bestand staat (bv Downloads -> cd Downloads)
+- voer volgende commando's uit in kali vm:
+- 2.12) chmod +x init_kali.sh
+- 2.13) ./init_kali.sh
+- 2.14) ip -br a
+- Dit is wat de uitvoer zou moeten zijn:
+- ![image](https://github.com/user-attachments/assets/d9b2301a-cd19-44c2-866a-a70e949028c7)
+- controleer nu of beide vm's met elkaar kunnen pingen met elkaar
+- in kali vm voer volgend commando uit:
+- 2.15) ping 10.10.10.4
+- in ubuntu vm voer volgend commando uit:
+- 2.15) ping 10.10.10.5
+- controleer nu ook of beide vm's toegang hebben tot het internet
 
 <!-- @ Jamie -->
 
