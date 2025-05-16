@@ -41,13 +41,23 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 
 ## 2) Virtuele omgeving vervolledigen (netwerk adapters)
 
+- zorg dat het init_kali.sh bestand is gedownload op je host
+- zorg dat het init_ubuntu.sh bestand is gedownload op je host
+- zorg dat het setup_tomcat.sh bestand is gedownload op je host
+- zorg dat het Dockerfile.txt bestand is gedownload op je host
+
+- geef in virtualbox de kali vm een gedeelde map waarin dit init_kali.sh bestand in zit
+
+- geef in virtualbox de ubuntu vm een gedeelde map waarin dit init_ubuntu.sh en setup_tomcat.sh en Dockerfile.txt in zit
+
 - 2.1) start de ubuntu vm
-- 2.2) zorg dat het init_ubuntu.sh bestand op de ubuntu vm staat
-- 2.3) open terminal in de ubuntu vm
-- 2.4) ga naar het pad waar dit init_ubuntu.sh bestand staat (bv Downloads -> cd Downloads)
-  
+- 2.2) open terminal in de ubuntu vm
 - voer volgende commando's uit in ubuntu vm:
-  
+
+- 2.3) sudo cp /media/sf_ubuntu/init_ubuntu.sh ~/Desktop/
+- 2.4) sudo cp /media/sf_ubuntu/setup_tomcat.sh ~/Desktop/
+- 2.5) sudo cp /media/sf_ubuntu/Dockerfile.txt ~/Desktop/
+ 
 - 2.5) chmod +x init_ubuntu.sh
 - 2.6) ./init_ubuntu.sh
 - Dit is wat de uitvoer zou moeten zijn:
