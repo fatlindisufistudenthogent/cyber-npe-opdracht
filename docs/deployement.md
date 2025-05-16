@@ -66,10 +66,9 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 - 2.14) ip -br a
 - Dit is wat de uitvoer zou moeten zijn:
 - ![image](https://github.com/user-attachments/assets/d9b2301a-cd19-44c2-866a-a70e949028c7)
-- controleer nu of beide vm's met elkaar kunnen pingen met elkaar
-- in kali vm voer volgend commando uit:
+- in kali vm voer volgend commando uit om te controleren of je kan pingen naar ubuntu vm:
 - 2.15) ping 10.10.10.4
-- in ubuntu vm voer volgend commando uit:
+- in ubuntu vm voer volgend commando uit om te controleren of je kan pingen naar kali vm:
 - 2.15) ping 10.10.10.5
 - controleer nu ook of beide vm's toegang hebben tot het internet
 
