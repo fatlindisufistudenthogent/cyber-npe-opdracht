@@ -74,7 +74,7 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 
 <!-- @ Jamie -->
 
-## 3) Opzetten van de kwetsbaarheid (UBUNTU VM)
+## 3) Opzetten van de kwetsbaarheid (Ubuntu VM)
 
 Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan de opdracht zelf. Hierbij gaan we dus nog een paar commando's uitvoeren.
 
