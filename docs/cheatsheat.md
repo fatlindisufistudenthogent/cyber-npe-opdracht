@@ -1,6 +1,6 @@
 # Starten van de aanval
 
-## 1) Stappen om de aanval succesvol uit te voeren (KALI VM)
+## 1) Stappen om de aanval succesvol uit te voeren (Kali VM)
 
 - 4.1) Start de kali vm (indien deze nog niet aan staat):
 - 4.2) zorg dat het setup_tomcat.sh bestand op de ubuntu vm staat (bv Downloads -> cd Downloads)
