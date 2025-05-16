@@ -41,6 +41,16 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 
 ## 2) Virtuele omgeving vervolledigen (netwerk adapters)
 
+- 2.1) start de ubuntu vm
+- 2.2) zorg dat het init_ubuntu.sh bestand op de ubuntu vm staat
+- 2.3) open terminal in de ubuntu vm
+- 2.4) ga naar het pad waar dit init_ubuntu.sh bestand staat (bv Downloads -> cd Downloads)
+- voer volgende commando's uit:
+- 2.5) chmod +x init_ubuntu.sh
+- 2.6) ./init_ubuntu.sh
+- Dit is wat de uitvoer zou moeten zijn:
+- ![image](https://github.com/user-attachments/assets/5df459aa-bf35-4787-b439-5265ebb989ae)
+
 <!-- @ Jamie -->
 
 ## 3) Starten van de opdracht (UBUNTU VM)
