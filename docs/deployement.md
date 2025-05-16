@@ -77,7 +77,7 @@ toon hier de aanval kort of dingen die belangrijk zijn om te weten
 
 Nu we een correcte virtuele omgeving hebben in beide VM's kunnen we beginnen aan de opdracht zelf. Hierbij gaan we dus nog een paar commando's uitvoeren.
 
-- 3.1) Start de ubuntu vm:
+- 3.1) Start de ubuntu vm (indien deze nog niet aan staat):
 - 3.2) open terminal
 
 - voer volgende commando's in:
@@ -110,7 +110,7 @@ Systeemvereisten om de installaties van de vms succesvol te verlopen:
 
 ## 4) Starten van de opdracht (KALI VM)
 
-- 4.1) Start de kali vm:
+- 4.1) Start de kali vm (indien deze nog niet aan staat):
 - 4.2) open terminal
 - 4.3) sudo systemctl start ssh
 - 4.4) sudo systemctl enable ssh
