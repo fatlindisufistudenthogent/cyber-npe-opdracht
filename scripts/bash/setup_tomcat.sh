@@ -71,13 +71,5 @@ else
     exit 1
 fi
 
-# Scan de poorten
-if command -v nmap &> /dev/null; then
-    echo "Scannen van poorten $TOMCAT_PORT_HTTP en $TOMCAT_PORT_AJP..."
-    nmap "$UBUNTU_IP" -p "$TOMCAT_PORT_HTTP,$TOMCAT_PORT_AJP"
-else
-    echo "Nmap niet geïnstalleerd. Installeer met: apt install nmap (optioneel)."
-fi
-
 
 echo "Setup voltooid op $(date). Container: $CONTAINER_NAME, IP: $UBUNTU_IP, Poorten: $TOMCAT_PORT_HTTP, $TOMCAT_PORT_AJP" >> setup_log.txt
