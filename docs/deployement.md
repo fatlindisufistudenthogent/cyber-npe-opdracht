@@ -116,7 +116,7 @@ in ubuntu:
    4) selecteer bewerken
    5) ga naar IPv4
    6) selecteer handmatig
-   7) kies nu een ip adress die je aan de kali vm wil geven (voorbeeld: 192.168.56.115)
+   7) kies nu een ip adress die je aan de ubuntu vm wil geven (voorbeeld: 10.10.10.4)
    8) stel de subnetmask in met 255.255.255.0
    9) stel de DNS-server in met 8.8.8.8
    10) controleer nu in terminal met commando "ip a" of dit adres ook klopt
@@ -129,7 +129,7 @@ in kali:
    4) selecteer bewerken
    5) ga naar IPv4
    6) selecteer handmatig
-   7) kies nu een ip adress die je aan de kali vm wil geven (voorbeeld: 192.168.56.116)
+   7) kies nu een ip adress die je aan de kali vm wil geven (voorbeeld: 10.10.10.5)
    8) stel de subnetmask in met 255.255.255.0
    9) stel de DNS-server in met 8.8.8.8
    10) controleer nu in terminal met commando "ip a" of dit adres ook klopt
